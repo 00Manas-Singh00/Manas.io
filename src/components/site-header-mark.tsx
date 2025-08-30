@@ -1,11 +1,11 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-
-import { ChanhDaiMark, getMarkSVG } from "./chanhdai-mark";
 import { useTheme } from "next-themes";
+
+import { ChanhDaiMark } from "./chanhdai-mark";
 
 export function SiteHeaderMark() {
   const pathname = usePathname();
@@ -16,7 +16,7 @@ function ChanhDaiMarkMotion() {
   const { scrollY } = useScroll();
   const [visible, setVisible] = useState(false);
   const distanceRef = useRef(160);
-  const { theme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   useMotionValueEvent(scrollY, "change", (latestValue) => {
     setVisible(latestValue >= distanceRef.current);

@@ -9,16 +9,13 @@ import {
   DownloadIcon,
   LetterTextIcon,
   MoonStarIcon,
-  RssIcon,
   SunIcon,
-  TextIcon,
-  TriangleDashedIcon,
   TypeIcon,
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -30,7 +27,6 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import type { Post } from "@/features/blog/types/post";
 import { SOCIAL_LINKS } from "@/features/profile/data/social-links";
 import { cn } from "@/lib/utils";
 import { copyText } from "@/utils/copy";
@@ -104,7 +100,7 @@ const SOCIAL_LINK_ITEMS: CommandLinkItem[] = SOCIAL_LINKS.map((item) => ({
   openInNewTab: true,
 }));
 
-export function CommandMenu({ posts }: { posts: Post[] }) {
+export function CommandMenu() {
   const router = useRouter();
 
   const { setTheme, resolvedTheme } = useTheme();
@@ -433,12 +429,4 @@ function CommandMenuKbd({ className, ...props }: React.ComponentProps<"kbd">) {
   );
 }
 
-function postToCommandLinkItem(post: Post): CommandLinkItem {
-  const isComponent = post.metadata?.category === "components";
-
-  return {
-    title: post.metadata.title,
-    href: isComponent ? `/components/${post.slug}` : `/blog/${post.slug}`,
-    keywords: isComponent ? ["component"] : undefined,
-  };
-}
+// No blog/components links in command menu at this time.
