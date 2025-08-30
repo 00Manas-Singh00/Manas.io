@@ -1,0 +1,74 @@
+"use client";
+
+import { motion, useMotionValueEvent, useScroll } from "motion/react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+
+import { ChanhDaiMark, getMarkSVG } from "./chanhdai-mark";
+import { useTheme } from "next-themes";
+
+export function SiteHeaderMark() {
+  const pathname = usePathname();
+  return pathname === "/" ? <ChanhDaiMarkMotion /> : <ChanhDaiMark />;
+}
+
+function ChanhDaiMarkMotion() {
+  const { scrollY } = useScroll();
+  const [visible, setVisible] = useState(false);
+  const distanceRef = useRef(160);
+  const { theme, resolvedTheme } = useTheme();
+
+  useMotionValueEvent(scrollY, "change", (latestValue) => {
+    setVisible(latestValue >= distanceRef.current);
+  });
+
+  useEffect(() => {
+    const coverMark = document.getElementById("js-cover-mark");
+    if (!coverMark) return;
+
+    distanceRef.current = calcDistance(coverMark);
+
+    const resizeObserver = new ResizeObserver(() => {
+      distanceRef.current = calcDistance(coverMark);
+    });
+    resizeObserver.observe(coverMark);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
+  const isDark = resolvedTheme === "dark";
+
+  return (
+    <motion.svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1154 622"
+      initial={{
+        opacity: 0,
+        transform: "translateY(8px)",
+      }}
+      animate={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0px)" : "translateY(8px)",
+      }}
+      transition={{ duration: 0.3 }}
+    >
+      <rect width="1154" height="622" fill={isDark ? "black" : "white"}/>
+      <path d="M17.6683 184.203L126.201 397.969V595.817H17.6683V184.203Z" fill={isDark ? "white" : "#424242"}/>
+      <path d="M432.099 50.0304L432.099 216.04L293.682 361.762L243.511 262.288L432.099 50.0304Z" fill={isDark ? "white" : "#424242"}/>
+      <rect width="108.663" height="428.437" rx="50" transform="matrix(0.889247 -0.457427 0.453286 0.891365 0 81.1738)" fill={isDark ? "white" : "#424242"}/>
+      <path d="M347.79 147.817L456.323 22.7411V545.817C456.323 573.431 433.937 595.817 406.323 595.817H397.79C370.175 595.817 347.79 573.431 347.79 545.817V147.817Z" fill={isDark ? "white" : "#424242"}/>
+      <path d="M816.555 22.7411H1060.75L1142.15 140.995H893.433L816.555 22.7411Z" fill={isDark ? "white" : "#424242"}/>
+      <path d="M708.022 477.563H959.005L1033.62 595.817H789.422L708.022 477.563Z" fill={isDark ? "white" : "#424242"}/>
+      <rect width="111.024" height="664.2" rx="50" transform="matrix(0.800771 -0.59897 0.548204 0.836345 698.978 66.5002)" fill={isDark ? "white" : "#424242"}/>
+    </motion.svg>
+  );
+}
+
+const calcDistance = (el: HTMLElement) => {
+  const rect = el.getBoundingClientRect();
+  const scrollTop = document.documentElement.scrollTop;
+  const headerHeight = 56;
+  return scrollTop + rect.top + rect.height - headerHeight;
+};

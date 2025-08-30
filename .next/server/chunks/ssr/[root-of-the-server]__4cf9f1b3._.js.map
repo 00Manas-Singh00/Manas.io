@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 27, "column": 0}, "map": {"version":3,"sources":["file:///Users/manas/Developer/Portfolio%202/src/app/%28app%29/%28docs%29/blog/%5Bslug%5D/page.tsx"],"sourcesContent":["import { notFound } from \"next/navigation\";\n\nexport default async function Page() {\n  notFound();\n}\n"],"names":[],"mappings":";;;;AAAA;AAAA;;AAEe,eAAe;IAC5B,IAAA,+XAAQ;AACV","debugId":null}}]
+}
