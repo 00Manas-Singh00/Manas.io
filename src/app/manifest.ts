@@ -9,7 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: SITE_INFO.description,
     icons: [
       {
-        src: "https://assets.chanhdai.com/images/icon-vector.svg",
+        src: "/r/Dev Logo.svg",
         type: "image/svg+xml",
         sizes: "any",
         purpose: "any",
