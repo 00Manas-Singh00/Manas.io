@@ -9,7 +9,13 @@ import { ChanhDaiMark } from "./chanhdai-mark";
 
 export function SiteHeaderMark() {
   const pathname = usePathname();
-  return pathname === "/" ? <ChanhDaiMarkMotion /> : <ChanhDaiMark />;
+
+  // On the home page, keep the animated mark.
+  if (pathname === "/") return <ChanhDaiMarkMotion />;
+
+  // On other pages, render inline SVG that inherits text color (currentColor)
+  // so it changes fill automatically with theme.
+  return <ChanhDaiMark className="h-8 w-auto text-foreground" />;
 }
 
 function ChanhDaiMarkMotion() {
