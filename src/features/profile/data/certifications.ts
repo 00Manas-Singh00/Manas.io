@@ -5,7 +5,7 @@ export const CERTIFICATIONS: Certification[] = [
     title: "Machine Learning Using Python",
     issuer: "Infosys",
     issuerLogoURL:
-      "/r/infosys.svg",
+      "/r/infosys logo.png",
     issueDate: "2024-11-11",
     credentialID: "543682",
     credentialURL:
@@ -18,7 +18,7 @@ export const CERTIFICATIONS: Certification[] = [
     issueDate: "2025-04-26",
     credentialID: "seo-47463-1745634751873",
     credentialURL:
-      "https://nextjs.org/learn/certificate?course=seo&user=47463&certId=seo-47463-1745634751873",
+      "#",
   },
   {
     title: "Next.js App Router Fundamentals",
@@ -27,7 +27,7 @@ export const CERTIFICATIONS: Certification[] = [
     issueDate: "2025-04-26",
     credentialID: "dashboard-app-47463-1745633258744",
     credentialURL:
-      "https://nextjs.org/learn/certificate?course=dashboard-app&user=47463&certId=dashboard-app-47463-1745633258744",
+      "#",
   },
   {
     title: "React Foundations for Next.js",
@@ -36,12 +36,12 @@ export const CERTIFICATIONS: Certification[] = [
     issueDate: "2025-04-26",
     credentialID: "react-foundations-47463-1745634245158",
     credentialURL:
-      "https://nextjs.org/learn/certificate?course=react-foundations&user=47463&certId=react-foundations-47463-1745634245158",
+      "#",
   },
   {
     title: "Unpacking NumPy and Pandas",
     issuer: "Copyright Office of Viet Nam",
-    issuerLogoURL: "/r/Infosys.svg",
+    issuerLogoURL: "/r/infosys logo.png",
     issueDate: "2024-09-19",
     credentialID: "0040/2025/QTG",
     credentialURL:
@@ -51,7 +51,7 @@ export const CERTIFICATIONS: Certification[] = [
     title: "Basics of Python",
     issuer: "Infosys",
     issuerLogoURL:
-      "/r/Infosys.svg",
+      "/r/infosys logo.png",
     issueDate: "2024-09-18",
     credentialID: "QH58202305187",
     credentialURL:
