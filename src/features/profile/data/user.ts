@@ -16,7 +16,7 @@ export const USER: User = {
   address: "Lucknow, Uttar Pradesh, India",
   phoneNumber: "KzkxOTkzNTY3NTY2OQ==", // +919935675669 encoded in Base64 (E.164 required)
   email: "bWFuYXNzaW5naDI3MDVAZ21haWwuY29t", // base64 encoded
-  website: "https://mnz-dev.netlify.app",
+  website: "https://manas-io.vercel.app",
   jobTitle: "Full Stack Engineer",
   jobs: [
     // {
