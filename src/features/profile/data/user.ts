@@ -19,16 +19,16 @@ export const USER: User = {
   website: "https://mnz-dev.netlify.app",
   jobTitle: "Full Stack Engineer",
   jobs: [
-    {
-      title: "Frontend Developer Intern",
-      company: "Hypweb Solutions LLP",
-      website: "https://hypweb.in/",
-    },
-    {
-      title: "Software Developer Intern",
-      company: "Radical Logix",
-      website: "https://www.radicallogix.com/",
-    },
+    // {
+    //   title: "Frontend Developer Intern",
+    //   company: "Hypweb Solutions LLP",
+    //   website: "https://hypweb.in/",
+    // },
+    // {
+    //   title: "Software Developer Intern",
+    //   company: "Radical Logix",
+    //   website: "https://www.radicallogix.com/",
+    // },
   ],
   about: `
 Hello, World! I’m Manas Singh — a Full Stack Web Developer and Designer passionate about crafting high-performance, visually engaging, and animation-rich web experiences.
