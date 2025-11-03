@@ -46,8 +46,7 @@ These achievements reflect my passion for problem-solving, rapid prototyping, an
 Let’s connect and create something extraordinary!
   `,
   avatar: "/r/ai image.jpeg",
-  ogImage:
-    "https://assets.chanhdai.com/images/screenshot-og-image-light.png?t=1755355653",
+  ogImage: "/r/preview%20image.png",
   namePronunciationUrl: "https://assets.chanhdai.com/audio/chanhdai.mp3",
   keywords: [
     "manas",
