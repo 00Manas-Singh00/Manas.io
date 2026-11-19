@@ -335,3 +335,102 @@
     @apply bg-code-highlight;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Home redesign: Swiss editorial, one cobalt ink on paper.            */
+/* ------------------------------------------------------------------ */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --font-display: var(--font-barlow);
+}
+
+:root {
+  --paper: #fbfbf8;
+  --ink: #2a4df5;
+  --ink-soft: color-mix(in oklab, var(--ink) 74%, var(--paper));
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark {
+  --paper: #070a17;
+  --ink: #7c97ff;
+}
+
+.home {
+  font-family: var(--font-barlow), ui-sans-serif, system-ui;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.home ::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.home :focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* Letter roll: each char slides up and its twin rises from below. */
+.roll {
+  display: inline-flex;
+  overflow: hidden;
+  line-height: 1;
+  padding-block: 0.08em;
+}
+.roll-char {
+  display: inline-block;
+  position: relative;
+  white-space: pre;
+  transition: transform 0.6s var(--ease-out-expo);
+  transition-delay: calc(var(--i) * 14ms);
+}
+.roll-char::after {
+  content: attr(data-char);
+  position: absolute;
+  left: 0;
+  top: 110%;
+}
+.group:hover .roll-char,
+.group:focus-visible .roll-char {
+  transform: translateY(-110%);
+}
+
+/* Directional ink fill for rows. JS sets data-dir to "top" or "bottom". */
+.ink-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: scaleY(0);
+  transition: transform 0.7s var(--ease-out-expo);
+  pointer-events: none;
+}
+[data-dir="top"] > .ink-fill { transform-origin: top; }
+[data-dir="bottom"] > .ink-fill { transform-origin: bottom; }
+.group:hover > .ink-fill { transform: scaleY(1); }
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink);
+}
+
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .roll-char, .ink-fill { transition: none; }
+}
