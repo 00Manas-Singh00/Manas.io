@@ -12,8 +12,8 @@ import { Capabilities } from "./capabilities";
 import { Contact } from "./contact";
 import { Hero } from "./hero";
 import { Loader } from "./loader";
+import { Principles } from "./principles";
 import { Projects } from "./projects";
-import { Proof } from "./proof";
 import { Recognition } from "./recognition";
 import { CompactBar, MenuOverlay } from "./site-nav";
 import { SmoothScroll } from "./smooth-scroll";
@@ -70,7 +70,7 @@ export function Home() {
 
       <main>
         <Hero onPassed={setBarVisible} />
-        <Proof />
+        <Principles />
         <About />
         <Work />
         <Projects />

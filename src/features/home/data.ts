@@ -25,35 +25,30 @@ export const SOCIALS = [
 ];
 
 export const SUMMARY =
-  "I ship production software for enterprise finance teams. As the primary engineer on a two-person team, I run discovery, demos and security reviews with client teams, then build the platform end to end: React and TypeScript, Python APIs, PostgreSQL and AWS, wired into SAP S/4HANA and ECC.";
+  "Hi, I'm Manas. I love the moment a tangled, real-world problem turns into software people actually use. Most days I'm the engineer on the client call in the morning and deep in the codebase by night: I listen, sketch, demo, then build the whole thing, from the interface you touch to the APIs, data and cloud underneath. And when nobody's looking, I'm making a physics puzzle game. Same job, better excuses.";
 
 export const EDUCATION =
   "B.Tech, Computer Science. Jaypee University of Engineering and Technology, 2022-2026.";
 
-export const PROOF = [
+/** How I work: three short rules, each set large with a two-line aside. */
+export const PRINCIPLES = [
   {
-    value: 10,
-    from: 180,
-    suffix: "s",
+    title: "Talk to people first",
     caption: [
-      "Per invoice, extraction to SAP posting.",
-      "It used to take three minutes.",
+      "The best spec is a conversation.",
+      "I sit in on the call, the demo, the review.",
     ],
   },
   {
-    value: 99,
-    from: 0,
-    suffix: "%",
-    caption: [
-      "Field-level extraction accuracy,",
-      "tracked against a labeled test set.",
-    ],
+    title: "Ship small, ship often",
+    caption: ["A rough version on Tuesday", "beats a perfect one next month."],
   },
   {
-    value: 2,
-    from: 0,
-    prefix: "/0",
-    caption: ["Platforms in production,", "3+ enterprise clients each."],
+    title: "Own it after launch",
+    caption: [
+      "Alerts, dashboards, the late-night fix.",
+      "Shipped means it keeps working.",
+    ],
   },
 ];
 
@@ -79,7 +74,7 @@ export const WORK: Role[] = [
     period: "Jun 2026 - Present",
     place: "India",
     intro:
-      "Primary engineer on a two-person team. I run discovery calls, demos, onboarding and security questionnaires with client finance and IT teams several times a week.",
+      "Primary engineer on a two-person team. I run discovery calls, demos, onboarding and security questionnaires with client teams several times a week.",
     chapters: [
       {
         title: "AI Document Processing Platform",
@@ -200,7 +195,8 @@ export const CAPABILITY_WORDS = [
   "NestJS",
   "FastAPI",
   "PostgreSQL",
-  "SAP S/4HANA",
+  "Next.js",
+  "Python",
   "Gemini",
   "React",
   "Redis",
@@ -225,9 +221,9 @@ export const SKILL_GROUPS = [
       "Multi-tenant isolation, RBAC, OIDC, JWT, HashiCorp Vault, audit logging",
   },
   {
-    title: "AI and enterprise",
+    title: "AI and integrations",
     items:
-      "Gemini API, OCR, LLM extraction and evaluation, SAP S/4HANA, SAP ECC, MIRO",
+      "Gemini API, Whisper, OCR, LLM extraction and evaluation, REST, OData, SAP",
   },
 ];
 

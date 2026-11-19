@@ -44,11 +44,11 @@ Motion and GSAP never animate the same element. Everything falls back to a stati
 - **Menu overlay:** a full-screen paper sheet slides down with a clip-path. The hairlines draw from left to right (`scaleX`), then the giant links rise in a stagger. Each row shows its section's key number (for example `/04`). Escape closes it, and focus is trapped while it's open.
 
 ### 2 · Hero, pinned (references 1 → 2)
-- **State A (reference 1):** a split layout. The headline on the left is `FULL-STACK ENGINEER: WHERE AI MEETS ENTERPRISE FINANCE`. On the right is the portrait in a grayscale, high-contrast duotone. A small caption bottom-left reads `SAGE TECHNOLOGIES / Associate Software Engineer`, standing in for the reference's "SERAPHINA FROST" caption.
+- **State A (reference 1):** a split layout. The headline on the left is `HAND ME THE MESSY PROBLEM. I'LL SHIP IT.`. On the right is the portrait in a grayscale, high-contrast duotone. A small caption bottom-left reads `SAGE TECHNOLOGIES / Associate Software Engineer`, standing in for the reference's "SERAPHINA FROST" caption.
 - **Scroll (pinned, about 120vh, scrubbed):** the portrait panel collapses to the right (`clip-path`) and the menu column fades upward. The headline scales up to span the whole width, as in reference 2. The orb glides from the lower left to the centre and grows.
 - *Why:* it is literally the transition between the two references. The first beat says who you are and the second makes the statement.
 
-### 3 · Proof in numbers (from reference 3's `/24`)
+### 3 · How I work (from reference 3's `/24`, words instead of numbers)
 - Three huge figures, each with a two-line caption on its right: `3 MIN → 10 S` per invoice, `99%` extraction accuracy, `/02` products in production for 3+ clients each.
 - The numbers count up once on entry. The rule above them draws in.
 - Layout: an asymmetric 7/5 offset. The second figure is pushed right, so it doesn't read as three equal cards.
@@ -71,7 +71,7 @@ Motion and GSAP never animate the same element. Everything falls back to a stati
 - **Footer of the section:** a giant `WORK` with `/04` on the right and the caption `SHIPPED TO PRODUCTION AND TO THE BROWSER`. An `EXPLORE` pill links to GitHub.
 
 ### 7 · Capabilities
-- This is the page's single marquee. Huge outline-to-fill words (TYPESCRIPT · NESTJS · FASTAPI · POSTGRES · SAP S/4HANA · GEMINI) move at a speed tied to scroll velocity and reverse direction with it.
+- This is the page's single marquee. Huge outline-to-fill words (TYPESCRIPT · NESTJS · FASTAPI · POSTGRES · NEXT.JS · PYTHON · GEMINI) move at a speed tied to scroll velocity and reverse direction with it.
 - Below it are six skill groups in a 3×2 grid with hairline tops. This replaces the old icon wall.
 
 ### 8 · Recognition

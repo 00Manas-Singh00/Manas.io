@@ -212,9 +212,9 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
         <div className="hero-stage relative mt-8 grid flex-1 gap-6 md:mt-6 md:min-h-0 md:grid-cols-2">
           <div className="relative flex flex-col justify-between">
             <h1 className="hero-headline max-w-full text-[clamp(2.1rem,4.1vw,4.4rem)] leading-[0.98] font-light uppercase will-change-transform md:w-max md:max-w-none">
-              <span className="hero-line block">Full-stack engineer:</span>
-              <span className="hero-line block">Where AI meets</span>
-              <span className="hero-line block">enterprise finance</span>
+              <span className="hero-line block">Hand me the</span>
+              <span className="hero-line block">messy problem.</span>
+              <span className="hero-line block">I&apos;ll ship it.</span>
             </h1>
             <div className="hero-caption mt-8 md:mt-0">
               <p className="hero-fade text-right text-xs uppercase md:text-sm">
