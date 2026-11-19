@@ -137,6 +137,11 @@ const components: MDXRemoteProps["components"] = {
 };
 
 const options: MDXRemoteProps["options"] = {
+  // v6 strips all JS expressions by default. Our MDX is first-party and passes
+  // literal props like `collapsible={false}`, so allow expressions but keep the
+  // dangerous-JS guard (eval, Function, process, require, ...) on.
+  blockJS: false,
+  blockDangerousJS: true,
   mdxOptions: {
     remarkPlugins: [remarkGfm, remarkCodeImport],
     rehypePlugins: [
