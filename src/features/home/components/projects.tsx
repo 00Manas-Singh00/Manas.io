@@ -12,6 +12,7 @@ import { PROFILE, type Project, PROJECTS, SOCIALS } from "../data";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 import { scroller, scrollToId } from "../lib/lenis";
 import { moveOrb } from "../lib/orb";
+import { ProjectVisual } from "./project-visual";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -32,7 +33,7 @@ function Dots() {
 
 /**
  * Reference 3, the gallery. The section pins while the four frames are developed:
- * each clip opens from the bottom and the image inside settles from 1.35x to 1x.
+ * each clip opens from the bottom and the live plate inside settles from 1.35x to 1x.
  */
 export function Projects() {
   const root = useRef<HTMLElement>(null);
@@ -138,16 +139,11 @@ export function Projects() {
               <div className="proj-card overflow-hidden">
                 <motion.div
                   layoutId={`frame-${p.id}`}
-                  className="relative aspect-[4/5] overflow-hidden bg-ink lg:aspect-auto lg:h-[clamp(220px,38vh,440px)]"
+                  className="relative aspect-[4/5] overflow-hidden border border-ink bg-paper lg:aspect-auto lg:h-[clamp(220px,38vh,440px)]"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.image}
-                    alt=""
-                    loading="lazy"
-                    className="proj-img absolute inset-0 size-full object-cover transition-[filter] duration-700 group-hover:contrast-125"
-                  />
-                  <div className="absolute inset-0 bg-ink opacity-0 mix-blend-screen transition-opacity duration-700 group-hover:opacity-70" />
+                  <div className="proj-img absolute inset-0">
+                    <ProjectVisual kind={p.visual} />
+                  </div>
                 </motion.div>
               </div>
               <div
@@ -264,14 +260,9 @@ function ProjectSheet({
             <motion.div
               layoutId={reduce ? undefined : `frame-${project.id}`}
               transition={{ duration: 0.9, ease: EASE }}
-              className="relative min-h-[50vh] overflow-hidden bg-ink md:min-h-0"
+              className="relative min-h-[50vh] overflow-hidden border border-ink bg-paper md:min-h-0"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={project.image}
-                alt=""
-                className="absolute inset-0 size-full object-cover"
-              />
+              <ProjectVisual kind={project.visual} large />
             </motion.div>
 
             <motion.div
