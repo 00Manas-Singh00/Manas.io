@@ -131,7 +131,8 @@ export type Project = {
   stack: string;
   points: string[];
   href?: string;
-  image: string;
+  /** Which live halftone plate represents the project (see project-visual.tsx). */
+  visual: "margin" | "graph" | "tide" | "voice";
 };
 
 export const PROJECTS: Project[] = [
@@ -148,8 +149,7 @@ export const PROJECTS: Project[] = [
       "Offline-first cloud saves: one versioned schema shared through Zod contracts, revision-based conflict detection and a reload-safe outbox.",
       "Security review before launch (Argon2id, hashed session tokens, CSRF, strict CSP), with 105 level tests and Playwright runs across three engines.",
     ],
-    image:
-      "https://picsum.photos/seed/margin-puzzle-shoreline/900/1200?grayscale",
+    visual: "margin",
   },
   {
     id: "curiosity-engine",
@@ -162,8 +162,7 @@ export const PROJECTS: Project[] = [
       "An interactive D3.js explorer over 10,000+ graph relationships.",
       "Sub-200 ms responses through Redis caching, with Gemini-powered topic expansion.",
     ],
-    image:
-      "https://picsum.photos/seed/curiosity-engine-water/900/1200?grayscale",
+    visual: "graph",
   },
   {
     id: "tradetide",
@@ -177,8 +176,7 @@ export const PROJECTS: Project[] = [
       "Reviews and ratings after each session, behind secure authentication.",
     ],
     href: "https://github.com/00Manas-Singh00/TradeTide",
-    image:
-      "https://picsum.photos/seed/tradetide-hands-light/900/1200?grayscale",
+    visual: "tide",
   },
   {
     id: "meet-genius",
@@ -193,8 +191,7 @@ export const PROJECTS: Project[] = [
       "Visual similarity analytics and downloadable reports.",
     ],
     href: "https://github.com/00Manas-Singh00/ProductivityAnalyzer",
-    image:
-      "https://picsum.photos/seed/meet-genius-sand-fabric/900/1200?grayscale",
+    visual: "voice",
   },
 ];
 
