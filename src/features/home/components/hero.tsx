@@ -2,6 +2,7 @@
 
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { useRef } from "react";
+import { preload } from "react-dom";
 
 import { NAV_ITEMS, PROFILE } from "../data";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
@@ -20,9 +21,11 @@ const HERO_B = { x: 0.04, y: -0.18, scale: 0.6 };
  */
 export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
   const root = useRef<HTMLElement>(null);
+  // Start fetching the portrait with the HTML, ahead of hydration and the loader.
+  preload(PROFILE.portrait, { as: "image", fetchPriority: "high" });
 
   useGSAP(
-    () => {
+    (_ctx, contextSafe) => {
       const reduce = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
@@ -40,12 +43,40 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
         gsap.set(".hero-portrait-inner img", { scale: 1.3 });
       }
 
-      const stopIntro = onIntroDone(() => {
-        // Plain assignment: the shader damps opacity itself, and a tween here could be reverted
-        // by whichever gsap.context happens to be running when the loader hands off.
-        orb.opacity = 1;
-        if (reduce) return;
-        const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      // Everything above is hidden by JS, so the reveal must never depend on a single hand-off.
+      // `showAll` is the failsafe: it kills the entrance and restores the natural CSS state.
+      let revealed = reduce;
+      let cancelled = false;
+      let introTl: gsap.core.Timeline | undefined;
+      const showAll = () => {
+        revealed = true;
+        introTl?.kill();
+        gsap.set(
+          [
+            split.lines,
+            ".hero-rule",
+            ".hero-fade",
+            ".hero-portrait-inner",
+            ".hero-portrait-inner img",
+          ],
+          { clearProps: "transform,opacity,clipPath" },
+        );
+      };
+      const safety = reduce
+        ? undefined
+        : window.setTimeout(() => !revealed && showAll(), 9000);
+
+      // contextSafe: owned by the hero, so the loader unmounting can never revert it.
+      const playIntro = contextSafe!(() => {
+        if (cancelled) return;
+        introTl = gsap.timeline({
+          defaults: { ease: "expo.out" },
+          onComplete: () => {
+            revealed = true;
+            window.clearTimeout(safety);
+          },
+        });
+        const tl = introTl;
         tl.to(split.lines, { yPercent: 0, stagger: 0.09, duration: 1.4 }, 0)
           .to(".hero-rule", { scaleX: 1, stagger: 0.06, duration: 1.4 }, 0.05)
           .to(
@@ -63,6 +94,24 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
             { opacity: 1, y: 0, stagger: 0.05, duration: 1 },
             0.4,
           );
+      });
+
+      const stopIntro = onIntroDone(() => {
+        // Plain assignment: the shader damps opacity itself, and a tween here could be reverted
+        // by whichever gsap.context happens to be running when the loader hands off.
+        orb.opacity = 1;
+        if (reduce) return;
+        // Open the portrait only once it can paint, so the clip never reveals an empty frame.
+        const img = root.current?.querySelector<HTMLImageElement>(
+          ".hero-portrait-inner img",
+        );
+        const ready = img?.decode
+          ? img.decode().catch(() => {})
+          : Promise.resolve();
+        Promise.race([
+          ready,
+          new Promise((resolve) => window.setTimeout(resolve, 1500)),
+        ]).then(playIntro);
       });
 
       // Pinned scrub (desktop only).
@@ -138,6 +187,9 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
       });
 
       return () => {
+        cancelled = true;
+        window.clearTimeout(safety);
+        introTl?.kill();
         stopIntro();
         split.revert();
       };
