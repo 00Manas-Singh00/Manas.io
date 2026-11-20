@@ -2,13 +2,20 @@
 
 import { ArrowDownRight, ArrowUpRight, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
-import { PROFILE, type Project, PROJECTS, SOCIALS } from "../data";
+import {
+  CASE_STUDIES,
+  PROFILE,
+  type Project,
+  PROJECTS,
+  SOCIALS,
+} from "../data";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 import { scroller, scrollToId } from "../lib/lenis";
 import { moveOrb } from "../lib/orb";
@@ -308,17 +315,28 @@ function ProjectSheet({
                 ))}
               </ul>
 
-              {project.href && (
-                <a
-                  href={project.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group mt-10 inline-flex w-fit items-center gap-2 rounded-full border border-ink px-5 py-2 uppercase transition-colors duration-500 hover:bg-ink hover:text-paper"
-                >
-                  <RollText text="View source" />
-                  <ArrowUpRight className="size-4" strokeWidth={1.5} />
-                </a>
-              )}
+              <div className="mt-10 flex flex-wrap gap-3">
+                {CASE_STUDIES[project.id] && (
+                  <Link
+                    href={`/projects/${project.id}`}
+                    className="group inline-flex w-fit items-center gap-2 rounded-full bg-ink px-5 py-2 text-paper uppercase transition-transform active:scale-[0.97]"
+                  >
+                    <RollText text="Read the case study" />
+                    <ArrowUpRight className="size-4" strokeWidth={1.5} />
+                  </Link>
+                )}
+                {project.href && (
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group inline-flex w-fit items-center gap-2 rounded-full border border-ink px-5 py-2 uppercase transition-colors duration-500 hover:bg-ink hover:text-paper"
+                  >
+                    <RollText text="View source" />
+                    <ArrowUpRight className="size-4" strokeWidth={1.5} />
+                  </a>
+                )}
+              </div>
             </motion.div>
           </div>
         </motion.div>
