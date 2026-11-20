@@ -8,7 +8,7 @@ export const PROFILE = {
   // Base64 so the address is not sitting in the HTML for scrapers.
   emailB64: "MDBtYW5hc3NpbmdoMDBAZ21haWwuY29t",
   resumeHref: "/resume/Manas_Singh_Resume.pdf",
-  portrait: "/r/ai image.jpeg",
+  portrait: "/r/portrait.jpeg",
 };
 
 export const NAV_ITEMS = [
