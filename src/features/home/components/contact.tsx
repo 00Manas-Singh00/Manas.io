@@ -1,13 +1,14 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check, Copy } from "lucide-react";
 import {
+  AnimatePresence,
   motion,
   useMotionValue,
   useReducedMotion,
   useSpring,
 } from "motion/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { PROFILE, SOCIALS } from "../data";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
@@ -43,12 +44,62 @@ function MagneticPill() {
       style={{ x: sx, y: sy }}
       className="group inline-flex items-center gap-3 rounded-full bg-ink px-8 py-4 text-xl text-paper uppercase active:scale-[0.97] md:px-10 md:py-5 md:text-2xl"
     >
-      <RollText text="Get in touch" />
+      <RollText text="Say hello" />
       <ArrowUpRight
         className="size-6 transition-transform duration-500 group-hover:rotate-45"
         strokeWidth={1.5}
       />
     </motion.a>
+  );
+}
+
+/** Copies the address, then rolls the label to a confirmation for a moment. */
+function CopyEmail() {
+  const reduce = useReducedMotion();
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const t = window.setTimeout(() => setCopied(false), 1800);
+    return () => window.clearTimeout(t);
+  }, [copied]);
+
+  return (
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(decodeEmail(PROFILE.emailB64));
+          setCopied(true);
+        } catch {
+          window.location.href = `mailto:${decodeEmail(PROFILE.emailB64)}`;
+        }
+      }}
+      className="group inline-flex cursor-pointer items-center gap-2 rounded-full border border-ink px-6 py-4 text-base uppercase transition-colors duration-500 hover:bg-ink hover:text-paper active:scale-[0.97] md:px-8 md:py-5 md:text-lg"
+    >
+      <span className="relative block h-[1.2em] w-[9ch] overflow-hidden text-left leading-[1.2]">
+        <AnimatePresence initial={false}>
+          <motion.span
+            key={copied ? "done" : "idle"}
+            className="absolute inset-x-0 top-0 block whitespace-nowrap"
+            initial={{ y: "110%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "-110%" }}
+            transition={{ duration: reduce ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {copied ? "Copied" : "Copy email"}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+      {copied ? (
+        <Check className="size-4" strokeWidth={1.5} />
+      ) : (
+        <Copy className="size-4" strokeWidth={1.5} />
+      )}
+      <span className="sr-only" aria-live="polite">
+        {copied ? "Email address copied" : ""}
+      </span>
+    </button>
   );
 }
 
@@ -114,15 +165,16 @@ export function Contact() {
       className="relative z-10 flex min-h-[100dvh] flex-col px-4 pt-24 pb-4 md:px-6 md:pt-32 md:pb-6"
     >
       <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col">
-        <h2 className="contact-head max-w-[14ch] text-[clamp(3rem,7.5vw,7rem)] leading-[0.9] font-light uppercase">
-          Bring me the hard integration.
+        <h2 className="contact-head max-w-[14ch] text-[clamp(2.4rem,10vw,7rem)] leading-[0.9] font-light uppercase">
+          Let&apos;s make something unreasonable.
         </h2>
-        <p className="mt-6 max-w-[48ch] text-lg leading-relaxed md:text-xl">
-          Open to full-stack and forward-deployed roles. Remote on IST or US
-          hours, or on-site in Noida, Bangalore, Gurgaon or Pune.
+        <p className="mt-6 max-w-[46ch] text-lg leading-relaxed md:text-xl">
+          Send the half-baked idea, the cursed bug, or the thing your team swore
+          was impossible. I reply faster than your CI pipeline.
         </p>
-        <div className="mt-10">
+        <div className="mt-10 flex flex-wrap items-center gap-3">
           <MagneticPill />
+          <CopyEmail />
         </div>
 
         <div className="mt-auto pt-20">
