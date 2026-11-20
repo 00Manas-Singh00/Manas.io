@@ -347,15 +347,15 @@
 }
 
 :root {
-  --paper: #fbfbf8;
-  --ink: #2a4df5;
-  --ink-soft: color-mix(in oklab, var(--ink) 74%, var(--paper));
+  --paper: #f3efe6;
+  --ink: #1d3bd1;
+  --ink-soft: color-mix(in oklab, var(--ink) 80%, var(--paper));
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark {
-  --paper: #070a17;
-  --ink: #7c97ff;
+  --paper: #0c0e16;
+  --ink: #8b9dff;
 }
 
 .home {
