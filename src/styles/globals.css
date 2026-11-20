@@ -349,6 +349,8 @@
 :root {
   --paper: #f3efe6;
   --ink: #1d3bd1;
+  --orb: #1d3bd1;
+  --orb-core: #1530c4;
   --ink-soft: color-mix(in oklab, var(--ink) 80%, var(--paper));
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -356,6 +358,8 @@
 .dark {
   --paper: #0c0e16;
   --ink: #8b9dff;
+  --orb: #4a5ef0;
+  --orb-core: #1c2fc9;
 }
 
 .home {
