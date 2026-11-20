@@ -1,39 +1,41 @@
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
+/** 404 in the home page's language: paper, one ink, hairlines and very large light capitals. */
 export function NotFound({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex h-[calc(100svh-5.5rem)] flex-col items-center justify-center",
-        className
+        fontDisplay.variable,
+        "home flex min-h-[100svh] flex-col px-4 py-4 md:px-6 md:py-6",
+        className,
       )}
     >
-      <svg
-        className="h-28 w-full text-border"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 514 258"
-        fill="none"
-      >
-        <path
-          d="M65 193v64h128v-64H65Zm0 0H1V65h64m0 128V65m384 0H321v128h128m0-128V1H257v256h192v-64m0-128v128m0-128h64v128h-64M65 65h128V1H65v64Z"
-          stroke="currentColor"
-          strokeWidth="1"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
+      <div className="flex justify-between border-b border-ink pb-2 text-xs uppercase md:text-sm">
+        <span>Manas Singh</span>
+        <span>/page not found/</span>
+      </div>
 
-      <h1 className="mt-8 mb-6 font-mono text-8xl font-medium">404</h1>
-
-      <Button variant="default" asChild>
-        <Link href="/">
-          Go to Home
-          <ArrowRightIcon />
-        </Link>
-      </Button>
+      <div className="flex flex-1 flex-col justify-end">
+        <p className="text-[clamp(7rem,32vw,28rem)] leading-[0.78] font-light">
+          404
+        </p>
+        <div className="mt-6 flex flex-wrap items-end justify-between gap-6 border-t border-ink pt-4">
+          <p className="max-w-[36ch] text-lg leading-relaxed md:text-xl">
+            This page shipped somewhere else, or never shipped at all.
+          </p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-base text-paper uppercase transition-transform active:scale-[0.97] md:text-lg"
+          >
+            Back to the home page
+            <ArrowUpRight className="size-5" strokeWidth={1.5} />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
