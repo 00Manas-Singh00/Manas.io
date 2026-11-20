@@ -61,11 +61,11 @@ export const metadata: Metadata = {
   keywords: SITE_INFO.keywords,
   authors: [
     {
-      name: "ncdai",
+      name: USER.displayName,
       url: SITE_INFO.url,
     },
   ],
-  creator: "ncdai",
+  creator: USER.displayName,
   openGraph: {
     siteName: SITE_INFO.name,
     url: "/",
@@ -74,19 +74,11 @@ export const metadata: Metadata = {
     lastName: USER.lastName,
     username: USER.username,
     gender: USER.gender,
-    images: [
-      {
-        url: SITE_INFO.ogImage,
-        width: 1200,
-        height: 630,
-        alt: SITE_INFO.name,
-      },
-    ],
+    // Images come from app/opengraph-image.tsx and app/twitter-image.tsx.
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@iamncdai", // Twitter username
-    images: [SITE_INFO.ogImage],
+    creator: "@singhmanas2705",
   },
   icons: {
     icon: [

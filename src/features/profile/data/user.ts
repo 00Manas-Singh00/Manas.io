@@ -7,7 +7,7 @@ export const USER: User = {
   username: "Manas2705",
   gender: "male",
   pronouns: "he/him",
-  bio: "Creating with code. Small details matter.",
+  bio: "Full-stack, forward-deployed engineer. Hand me the messy problem: I'll sit with the people who have it, then ship the software that fixes it, end to end.",
   flipSentences: [
     "Creating with code. Small details matter.",
     "Software Engineer",
@@ -17,7 +17,7 @@ export const USER: User = {
   phoneNumber: "KzkxOTkzNTY3NTY2OQ==", // +919935675669 encoded in Base64 (E.164 required)
   email: "bWFuYXNzaW5naDI3MDVAZ21haWwuY29t", // base64 encoded
   website: "https://manas-io.vercel.app",
-  jobTitle: "Full Stack Engineer",
+  jobTitle: "Full-Stack Engineer",
   jobs: [
     // {
     //   title: "Frontend Developer Intern",
@@ -49,10 +49,15 @@ Let’s connect and create something extraordinary!
   ogImage: "/r/preview%20image.png",
   namePronunciationUrl: "https://assets.chanhdai.com/audio/chanhdai.mp3",
   keywords: [
-    "manas",
-    "mnz",
-    "manazz",
-    "mns"
+    "Manas Singh",
+    "full-stack engineer",
+    "forward-deployed engineer",
+    "software engineer portfolio",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Python",
+    "AI engineer",
   ],
   dateCreated: "2025-08-28", // YYYY-MM-DD
 };

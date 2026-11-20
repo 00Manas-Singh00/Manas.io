@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -19,13 +19,35 @@ import { CompactBar, MenuOverlay } from "./site-nav";
 import { SmoothScroll } from "./smooth-scroll";
 import { Work } from "./work";
 
-// Three.js is the heaviest thing on the page: keep it out of the server bundle and first paint.
+// Three.js is the heaviest thing on the page: keep it out of the server bundle and first paint,
+// and never load it at all on phones or low-power devices, which get the CSS orb instead.
 const OrbCanvas = dynamic(() => import("./orb-canvas"), { ssr: false });
+const OrbLite = dynamic(() => import("./orb-lite"), { ssr: false });
+
+function prefersLiteOrb() {
+  const nav = navigator as Navigator & {
+    connection?: { saveData?: boolean };
+    deviceMemory?: number;
+  };
+  if (window.matchMedia("(max-width: 767px), (pointer: coarse)").matches)
+    return true;
+  if (nav.connection?.saveData) return true;
+  if ((nav.hardwareConcurrency ?? 8) <= 4) return true;
+  if ((nav.deviceMemory ?? 8) <= 4) return true;
+  try {
+    const gl = document.createElement("canvas").getContext("webgl");
+    return !gl;
+  } catch {
+    return true;
+  }
+}
 
 export function Home() {
   const [barVisible, setBarVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [label, setLabel] = useState("Index");
+  const [orbMode, setOrbMode] = useState<"webgl" | "lite" | null>(null);
+  useEffect(() => setOrbMode(prefersLiteOrb() ? "lite" : "webgl"), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   useGSAP(() => {
@@ -59,7 +81,8 @@ export function Home() {
     >
       <SmoothScroll />
       <Loader />
-      <OrbCanvas />
+      {orbMode === "webgl" && <OrbCanvas />}
+      {orbMode === "lite" && <OrbLite />}
 
       <CompactBar
         visible={barVisible && !menuOpen}
