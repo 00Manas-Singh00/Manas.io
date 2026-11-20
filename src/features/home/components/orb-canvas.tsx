@@ -145,8 +145,8 @@ export default function OrbCanvas() {
         eventPrefix="client"
       >
         <Orb
-          ink={dark ? "#4f6dff" : "#2a4df5"}
-          core={dark ? "#1d38d9" : "#1636e0"}
+          ink={dark ? "#4a5ef0" : "#1d3bd1"}
+          core={dark ? "#1c2fc9" : "#1530c4"}
         />
       </Canvas>
     </div>
