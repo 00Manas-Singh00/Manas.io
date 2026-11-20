@@ -77,21 +77,21 @@ export const WORK: Role[] = [
       "Primary engineer on a two-person team. I run discovery calls, demos, onboarding and security questionnaires with client teams several times a week.",
     chapters: [
       {
-        title: "AI Document Processing Platform",
+        title: "AI document pipeline",
         stack: "TypeScript, NestJS, React, MongoDB, Redis, BullMQ, Gemini API",
         points: [
-          "Multi-tenant platform that extracts invoice and freight-document data and posts it to SAP (MIRO), about 1,000 documents a month for 3+ enterprise clients.",
-          "A 4-stage async pipeline (OCR, Gemini extraction, validation, automated SAP posting) cut handling time from about 3 minutes to about 10 seconds.",
-          "99% field-level accuracy, with confidence thresholds that flag uncertain fields for operator review.",
+          "Built a 4-stage async pipeline (OCR, LLM extraction, validation, posting to the client's ERP) that cut handling time per document from about 3 minutes to about 10 seconds.",
+          "Multi-tenant from day one: about 1,000 documents a month across 3+ enterprise clients on one deployment.",
+          "99% field-level accuracy against a labeled test set, with confidence thresholds that route uncertain fields to a human instead of guessing.",
           "Role- and policy-based access control (6 roles, 10 permissions), a four-eyes impersonation flow for auditors and 12 admin views.",
         ],
       },
       {
-        title: "Financial Anomaly Detection Platform",
+        title: "Anomaly detection platform",
         stack: "Python, FastAPI, PostgreSQL, Redis, React",
         points: [
-          "Flags duplicate invoices, suspicious vendor bank-account changes and risky payments in SAP S/4HANA and ECC data before payment.",
-          "An outbound-only relay in each client's AWS account reads SAP over OData with no inbound firewall changes.",
+          "Detection engine that catches duplicate invoices, suspicious bank-detail changes and risky payments before money moves.",
+          "Designed an outbound-only relay inside each client's AWS account, so it reads their ERP over OData without a single inbound firewall change.",
           "Tenant isolation with PostgreSQL Row-Level Security, per-tenant HashiCorp Vault keys, OIDC single sign-on and audit logging.",
           "Run in production with Prometheus and Grafana alerting, tested restores and dashboards load-tested at 1M+ findings.",
         ],
