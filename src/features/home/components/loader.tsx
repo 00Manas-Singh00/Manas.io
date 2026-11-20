@@ -86,7 +86,9 @@ export function Loader() {
           },
           2.15,
         )
-        .call(markIntroDone, [], 2.45);
+        // Deferred: work started from inside this timeline would belong to the loader's
+        // context and be reverted when the loader unmounts.
+        .call(() => window.setTimeout(markIntroDone, 0), [], 2.45);
     },
     { scope: root },
   );

@@ -25,7 +25,7 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
   preload(PROFILE.portrait, { as: "image", fetchPriority: "high" });
 
   useGSAP(
-    () => {
+    (_ctx, contextSafe) => {
       const reduce = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
@@ -66,7 +66,8 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
         ? undefined
         : window.setTimeout(() => !revealed && showAll(), 9000);
 
-      const playIntro = () => {
+      // contextSafe: owned by the hero, so the loader unmounting can never revert it.
+      const playIntro = contextSafe!(() => {
         if (cancelled) return;
         introTl = gsap.timeline({
           defaults: { ease: "expo.out" },
@@ -93,7 +94,7 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
             { opacity: 1, y: 0, stagger: 0.05, duration: 1 },
             0.4,
           );
-      };
+      });
 
       const stopIntro = onIntroDone(() => {
         // Plain assignment: the shader damps opacity itself, and a tween here could be reverted
