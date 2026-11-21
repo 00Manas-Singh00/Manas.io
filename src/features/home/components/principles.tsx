@@ -27,36 +27,89 @@ export function Principles() {
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      const splits = gsap.utils
-        .toArray<HTMLElement>(".pr-item")
-        .map((item) => {
-          const split = SplitText.create(item.querySelector(".pr-title"), {
-            type: "lines",
-            mask: "lines",
-          });
-          const tl = gsap.timeline({
-            scrollTrigger: { trigger: item, start: "top 78%", once: true },
-          });
-          tl.from(item.querySelector(".pr-rule"), { scaleX: 0, duration: 1.4 }, 0)
-            .from(
-              item.querySelector(".pr-index"),
-              { yPercent: 100, duration: 1 },
-              0.1,
-            )
-            .from(
-              split.lines,
-              { yPercent: 110, stagger: 0.08, duration: 1.3 },
-              0.15,
-            )
-            .from(
-              item.querySelectorAll(".pr-cap"),
-              { yPercent: 100, stagger: 0.08, duration: 1 },
-              0.45,
-            );
-          return split;
-        });
+      const fine = window.matchMedia(
+        "(hover: hover) and (pointer: fine)",
+      ).matches;
+      const cleanups: (() => void)[] = [];
 
-      return () => splits.forEach((s) => s.revert());
+      gsap.utils.toArray<HTMLElement>(".pr-item").forEach((item) => {
+        const title = item.querySelector<HTMLElement>(".pr-title")!;
+        // Words keep line breaks honest; chars are what fall. No mask, so letters
+        // can drop in from above the line.
+        const split = SplitText.create(title, { type: "words,chars" });
+        cleanups.push(() => split.revert());
+
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: item, start: "top 78%", once: true },
+        });
+        tl.from(item.querySelector(".pr-rule"), { scaleX: 0, duration: 1.4 }, 0)
+          .from(
+            item.querySelector(".pr-index"),
+            { yPercent: 100, duration: 1 },
+            0.1,
+          )
+          // Type with weight: each letter drops, lands and bounces, slightly askew.
+          .from(
+            split.chars,
+            {
+              yPercent: () => gsap.utils.random(-260, -140),
+              rotation: () => gsap.utils.random(-28, 28),
+              opacity: 0,
+              duration: 1.15,
+              ease: "bounce.out",
+              stagger: { each: 0.028, from: "random" },
+            },
+            0.15,
+          )
+          .from(
+            item.querySelectorAll(".pr-cap"),
+            { yPercent: 100, stagger: 0.08, duration: 1 },
+            0.6,
+          );
+
+        if (!fine) return;
+
+        // Hover: letters near the pointer shy away and lean, then spring back.
+        const springs = split.chars.map((c) => ({
+          el: c as HTMLElement,
+          x: gsap.quickTo(c, "x", {
+            duration: 0.9,
+            ease: "elastic.out(1, 0.35)",
+          }),
+          y: gsap.quickTo(c, "y", {
+            duration: 0.9,
+            ease: "elastic.out(1, 0.35)",
+          }),
+          skew: gsap.quickTo(c, "skewX", {
+            duration: 0.9,
+            ease: "elastic.out(1, 0.35)",
+          }),
+        }));
+        const onMove = (e: PointerEvent) => {
+          for (const s of springs) {
+            const b = s.el.getBoundingClientRect();
+            const dx = b.left + b.width / 2 - e.clientX;
+            const dy = b.top + b.height / 2 - e.clientY;
+            const dist = Math.hypot(dx, dy) || 1;
+            const reach = b.height * 1.6;
+            const k = Math.max(0, 1 - dist / reach);
+            const push = k * k * b.height * 0.32;
+            s.x((dx / dist) * push);
+            s.y((dy / dist) * push);
+            s.skew((-dx / dist) * k * 14);
+          }
+        };
+        const onLeave = () =>
+          springs.forEach((s) => (s.x(0), s.y(0), s.skew(0)));
+        title.addEventListener("pointermove", onMove);
+        title.addEventListener("pointerleave", onLeave);
+        cleanups.push(() => {
+          title.removeEventListener("pointermove", onMove);
+          title.removeEventListener("pointerleave", onLeave);
+        });
+      });
+
+      return () => cleanups.forEach((fn) => fn());
     },
     { scope: root },
   );
@@ -82,7 +135,10 @@ export function Principles() {
               <span className="pr-index block">/0{i + 1}</span>
             </div>
             <div className="flex flex-col gap-y-4 md:flex-row md:items-end md:gap-x-8">
-              <h3 data-ink className="pr-title text-[clamp(2.75rem,6.4vw,6.5rem)] leading-[0.9] font-light text-balance uppercase md:flex-1">
+              <h3
+                data-ink
+                className="pr-title text-[clamp(2.75rem,6.4vw,6.5rem)] leading-[0.9] font-light text-balance uppercase md:flex-1"
+              >
                 {p.title}
               </h3>
               <div className="shrink-0 pb-1 text-xs uppercase md:text-sm">
