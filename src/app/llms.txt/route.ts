@@ -1,5 +1,6 @@
 import { SITE_INFO } from "@/config/site";
 import {
+  CASE_STUDIES,
   EDUCATION,
   PROFILE,
   PROJECTS,
@@ -39,7 +40,7 @@ ${c.points.map((p) => `- ${p}`).join("\n")}`,
 ${PROJECTS.map(
   (p) => `### ${p.title} (${p.year}, ${p.status})
 ${p.caption}. Stack: ${p.stack}
-${p.points.map((pt) => `- ${pt}`).join("\n")}${p.href ? `\nSource: ${p.href}` : ""}`,
+${p.points.map((pt) => `- ${pt}`).join("\n")}${CASE_STUDIES[p.id] ? `\nCase study: ${SITE_INFO.url}/projects/${p.id}` : ""}${p.href ? `\nSource: ${p.href}` : ""}`,
 ).join("\n\n")}
 
 ## Skills

@@ -249,3 +249,115 @@ export const RECOGNITION = [
     year: "2024",
   },
 ];
+
+/**
+ * Long-form write-ups for /projects/[id]. Every claim here comes from the résumé;
+ * add screenshots, numbers and stories as they become available.
+ */
+export type CaseStudy = {
+  /** One-line framing shown under the title. */
+  lede: string;
+  problem: string;
+  built: string[];
+  hardParts: { title: string; body: string }[];
+  outcome: string[];
+};
+
+export const CASE_STUDIES: Record<string, CaseStudy> = {
+  "the-margin": {
+    lede: "A physics puzzle game that behaves like a product: accounts, cloud saves and a security review, all in one TypeScript monorepo.",
+    problem:
+      "A browser game lives in the least reliable place there is. Players close tabs mid-level, lose connection on a train and switch devices, and every one of those moments is a chance to lose their progress. The Margin had to keep a save safe through all of it, offline first, and still feel like a game rather than a form.",
+    built: [
+      "The game itself, built in Godot and compiled to WebAssembly so it runs in the browser, with 16 handcrafted levels.",
+      "A Next.js site with player accounts, and a NestJS API behind it, together in one TypeScript monorepo.",
+      "Offline-first cloud saves: the game keeps playing without a connection and syncs when one comes back.",
+    ],
+    hardParts: [
+      {
+        title: "Saves that never lose progress",
+        body: "Two devices can both believe they hold the latest save. Each save carries a revision, so the server detects a conflict instead of silently overwriting, and pending writes wait in an outbox that survives a page reload, so nothing is dropped between the game and the API.",
+      },
+      {
+        title: "One schema everywhere",
+        body: "The save format is a single versioned schema, shared through Zod contracts, so the site and the API validate exactly the same shape and a format change is one edit rather than three.",
+      },
+      {
+        title: "Treating a game like production software",
+        body: "Before launch it went through a security review: Argon2id password hashing, hashed session tokens, CSRF protection and a strict Content Security Policy.",
+      },
+    ],
+    outcome: [
+      "16 levels, covered by 105 level tests.",
+      "Playwright runs across three browser engines.",
+      "Pre-launch, built solo.",
+    ],
+  },
+  "curiosity-engine": {
+    lede: "A knowledge graph you can wander through, one connection at a time.",
+    problem:
+      "Lists and search results show you topics one at a time and hide how they connect. Curiosity Engine turns a topic into a graph you can explore, following links outward the way curiosity actually works.",
+    built: [
+      "An interactive D3.js explorer over a graph of 10,000+ relationships.",
+      "A Next.js front end over Node.js and FastAPI services, with PostgreSQL storing the graph.",
+      "Gemini-powered topic expansion, so the graph can grow from any node you pick.",
+    ],
+    hardParts: [
+      {
+        title: "Keeping a large graph feel instant",
+        body: "Exploration only works if every click answers immediately. Redis caching in front of the graph queries keeps responses under 200 ms.",
+      },
+      {
+        title: "Growing the graph on demand",
+        body: "Instead of precomputing everything, Gemini expands a topic into new related nodes when you ask for them, so the graph reaches places nobody seeded by hand.",
+      },
+    ],
+    outcome: [
+      "Sub-200 ms responses across 10,000+ relationships.",
+      "A side project.",
+    ],
+  },
+  tradetide: {
+    lede: "A marketplace where the currency is what you know.",
+    problem:
+      "Most people have a skill someone else wants and a skill they would like to learn. TradeTide lets them trade one for the other directly: no money, just people teaching each other.",
+    built: [
+      "A skill-bartering marketplace for posting and answering trade requests.",
+      "Real-time chat between matched people, built on Socket.io.",
+      "Session scheduling, then reviews and ratings after each session.",
+      "A React and TypeScript front end with Redux Toolkit state and Tailwind CSS, behind secure authentication.",
+    ],
+    hardParts: [
+      {
+        title: "Real-time without losing the thread",
+        body: "Requests, chat and scheduling all change while you are looking at them. Socket.io carries those updates live, and Redux Toolkit keeps a single source of truth on the client so the views stay consistent with each other.",
+      },
+      {
+        title: "Trust between strangers",
+        body: "A barter only works if both sides show up. Reviews and ratings after every session give the next person something to go on.",
+      },
+    ],
+    outcome: ["Open source on GitHub."],
+  },
+  "meet-genius": {
+    lede: "Measures how closely a meeting actually stuck to its agenda.",
+    problem:
+      "Every meeting has an agenda, and most drift away from it. Nobody can say by how much. Meet Genius takes the recording and the agenda and answers that question with a score.",
+    built: [
+      "Accepts video, audio or plain text, and transcribes recordings with OpenAI Whisper.",
+      "Scores each part of the discussion against the agenda topics, using Sentence Transformers and scikit-learn.",
+      "Visual similarity analytics with Chart.js, and downloadable reports, served from a Python and Flask back end.",
+    ],
+    hardParts: [
+      {
+        title: "Turning talk into something measurable",
+        body: "A transcript is unstructured. Comparing each stretch of discussion with each agenda topic as sentence embeddings turns relevance into a number you can chart and compare.",
+      },
+      {
+        title: "Any input, one pipeline",
+        body: "Video, audio and text all end up as text, so a single scoring and reporting path serves every format.",
+      },
+    ],
+    outcome: ["Built as a hackathon project.", "Open source on GitHub."],
+  },
+};
