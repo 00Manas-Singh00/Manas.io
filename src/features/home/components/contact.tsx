@@ -227,7 +227,9 @@ export function Contact() {
           </p>
           <p className="mt-4 flex justify-between text-xs uppercase">
             <span>© {new Date().getFullYear()} Manas Singh</span>
-            <span>Built with Next.js, GSAP and three.js</span>
+            <span className="hidden md:inline">
+              Psst: type &ldquo;ship it&rdquo; anywhere
+            </span>
           </p>
         </div>
       </div>

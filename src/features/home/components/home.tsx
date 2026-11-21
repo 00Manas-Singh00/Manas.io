@@ -18,6 +18,7 @@ import { Press } from "./press";
 import { Principles } from "./principles";
 import { Projects } from "./projects";
 import { Recognition } from "./recognition";
+import { ShipIt } from "./ship-it";
 import { CompactBar, MenuOverlay } from "./site-nav";
 import { SmoothScroll } from "./smooth-scroll";
 import { Work } from "./work";
@@ -120,6 +121,7 @@ export function Home() {
       </main>
       <Contact />
 
+      <ShipIt />
       <div aria-hidden className="grain" />
     </div>
   );
