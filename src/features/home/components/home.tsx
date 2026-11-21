@@ -14,6 +14,7 @@ import { Capabilities } from "./capabilities";
 import { Contact } from "./contact";
 import { Hero } from "./hero";
 import { Loader } from "./loader";
+import { Press } from "./press";
 import { Principles } from "./principles";
 import { Projects } from "./projects";
 import { Recognition } from "./recognition";
@@ -48,6 +49,7 @@ export function Home() {
   const [barVisible, setBarVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [label, setLabel] = useState("Index");
+  const [printed, setPrinted] = useState({ index: 1, total: 8 });
   const [orbMode, setOrbMode] = useState<"webgl" | "lite" | null>(null);
   useEffect(() => setOrbMode(prefersLiteOrb() ? "lite" : "webgl"), []);
   // The orb punches through the large type (see lib/ink.ts).
@@ -58,17 +60,21 @@ export function Home() {
     // Live section label for the compact bar. Debounced, so a fast flick through
     // five sections rolls once to where you land instead of five times.
     let pending: number | undefined;
-    const showLabel = (next: string) => {
+    const sections = gsap.utils.toArray<HTMLElement>("[data-label]");
+    const showLabel = (next: string, i: number) => {
       window.clearTimeout(pending);
-      pending = window.setTimeout(() => setLabel(next), 140);
+      pending = window.setTimeout(() => {
+        setLabel(next);
+        setPrinted({ index: i + 1, total: sections.length });
+      }, 140);
     };
 
-    gsap.utils.toArray<HTMLElement>("[data-label]").forEach((el) => {
+    sections.forEach((el, i) => {
       ScrollTrigger.create({
         trigger: el,
         start: "top 50%",
         end: "bottom 50%",
-        onToggle: (self) => self.isActive && showLabel(el.dataset.label!),
+        onToggle: (self) => self.isActive && showLabel(el.dataset.label!, i),
       });
     });
 
@@ -97,6 +103,11 @@ export function Home() {
         onMenu={() => setMenuOpen(true)}
       />
       <MenuOverlay open={menuOpen} onClose={closeMenu} />
+      <Press
+        visible={barVisible && !menuOpen}
+        index={printed.index}
+        total={printed.total}
+      />
 
       <main>
         <Hero onPassed={setBarVisible} />
