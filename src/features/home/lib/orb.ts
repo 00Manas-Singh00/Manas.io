@@ -17,6 +17,16 @@ export const orb: OrbState = {
   opacity: 0,
 };
 
+/**
+ * Where the orb actually is on screen, in CSS pixels, after damping and the pointer
+ * lean. Written every frame by whichever renderer is active (WebGL or CSS), read by
+ * the ink effects so type can react to the real orb rather than its target.
+ */
+export const orbScreen = { cx: -9999, cy: -9999, r: 0, opacity: 0 };
+
+// The WebGL camera (z = 5, fov 35deg) sees this many world units of height.
+export const VIEW_H = 2 * 5 * Math.tan((35 / 2) * (Math.PI / 180));
+
 export function moveOrb(to: Partial<OrbState>, duration = 1.8) {
   gsap.to(orb, { ...to, duration, ease: "expo.out", overwrite: "auto" });
 }

@@ -176,7 +176,7 @@ export function Projects() {
 
         {/* SPRING /24 from reference 3, rewritten for this page. */}
         <div className="mt-10 grid items-end gap-6 lg:mt-auto lg:grid-cols-[auto_1fr] lg:gap-12">
-          <p className="proj-big text-[clamp(4rem,10.5vw,10.5rem)] leading-[0.8] font-light whitespace-nowrap uppercase">
+          <p data-ink className="proj-big text-[clamp(4rem,10.5vw,10.5rem)] leading-[0.8] font-light whitespace-nowrap uppercase">
             Projects
           </p>
           <div className="proj-tail flex items-end justify-between gap-6">

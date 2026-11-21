@@ -165,7 +165,10 @@ export function Contact() {
       className="relative z-10 flex min-h-[100dvh] flex-col px-4 pt-24 pb-4 md:px-6 md:pt-32 md:pb-6"
     >
       <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col">
-        <h2 className="contact-head max-w-[14ch] text-[clamp(2.4rem,10vw,7rem)] leading-[0.9] font-light uppercase">
+        <h2
+          data-ink
+          className="contact-head max-w-[14ch] text-[clamp(2.4rem,10vw,7rem)] leading-[0.9] font-light uppercase"
+        >
           Let&apos;s make something unreasonable.
         </h2>
         <p className="mt-6 max-w-[46ch] text-lg leading-relaxed md:text-xl">
@@ -216,6 +219,7 @@ export function Contact() {
 
           <p
             aria-hidden
+            data-ink
             className="contact-name mt-6 text-center text-[clamp(3.5rem,15.2vw,17rem)] leading-[0.78] font-light whitespace-nowrap uppercase"
           >
             Manas Singh

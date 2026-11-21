@@ -82,7 +82,7 @@ export function Principles() {
               <span className="pr-index block">/0{i + 1}</span>
             </div>
             <div className="flex flex-col gap-y-4 md:flex-row md:items-end md:gap-x-8">
-              <h3 className="pr-title text-[clamp(2.75rem,6.4vw,6.5rem)] leading-[0.9] font-light text-balance uppercase md:flex-1">
+              <h3 data-ink className="pr-title text-[clamp(2.75rem,6.4vw,6.5rem)] leading-[0.9] font-light text-balance uppercase md:flex-1">
                 {p.title}
               </h3>
               <div className="shrink-0 pb-1 text-xs uppercase md:text-sm">

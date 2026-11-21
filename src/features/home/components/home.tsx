@@ -7,6 +7,7 @@ import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 import { gsap, ScrollTrigger, useGSAP } from "../lib/gsap";
+import { startInkField } from "../lib/ink";
 import { About } from "./about";
 import { Capabilities } from "./capabilities";
 import { Contact } from "./contact";
@@ -48,6 +49,8 @@ export function Home() {
   const [label, setLabel] = useState("Index");
   const [orbMode, setOrbMode] = useState<"webgl" | "lite" | null>(null);
   useEffect(() => setOrbMode(prefersLiteOrb() ? "lite" : "webgl"), []);
+  // The orb punches through the large type (see lib/ink.ts).
+  useEffect(() => startInkField(), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   useGSAP(() => {

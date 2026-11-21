@@ -3,10 +3,7 @@
 import { useEffect, useRef } from "react";
 
 import { gsap } from "../lib/gsap";
-import { orb } from "../lib/orb";
-
-// Matches the WebGL camera (z = 5, fov 35deg): visible height in world units.
-const VIEW_H = 2 * 5 * Math.tan((35 / 2) * (Math.PI / 180));
+import { orb, orbScreen, VIEW_H } from "../lib/orb";
 
 /**
  * The orb without three.js, for phones and low-power devices. A blurred radial disc
@@ -45,6 +42,11 @@ export default function OrbLite() {
       node.style.height = `${dia}px`;
       node.style.transform = `translate3d(${cx - dia / 2}px, ${cy - dia / 2}px, 0)`;
       node.style.opacity = String(cur.o);
+
+      orbScreen.cx = cx;
+      orbScreen.cy = cy;
+      orbScreen.r = dia / 2;
+      orbScreen.opacity = cur.o;
     };
 
     gsap.ticker.add(tick);

@@ -263,7 +263,7 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
         {/* Stage: headline left, portrait right. The scrub turns this into reference 2. */}
         <div className="hero-stage relative mt-8 grid flex-1 gap-6 md:mt-6 md:min-h-0 md:grid-cols-2">
           <div className="relative flex flex-col justify-between">
-            <h1 className="hero-headline max-w-full text-[clamp(2.1rem,4.1vw,4.4rem)] leading-[0.98] font-light uppercase will-change-transform md:w-max md:max-w-none">
+            <h1 data-ink className="hero-headline max-w-full text-[clamp(2.1rem,4.1vw,4.4rem)] leading-[0.98] font-light uppercase will-change-transform md:w-max md:max-w-none">
               <span className="hero-line block">Hand me the</span>
               <span className="hero-line block">messy problem.</span>
               <span className="hero-line block">I&apos;ll ship it.</span>

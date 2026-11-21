@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
-import { orb } from "../lib/orb";
+import { orb, orbScreen } from "../lib/orb";
 
 // Ashima Arts 3D simplex noise (MIT).
 const NOISE = /* glsl */ `
@@ -108,6 +108,14 @@ function Orb({ ink, core }: { ink: string; core: string }) {
       1.6,
       d,
     );
+
+    // Publish the on-screen circle for the ink effects (world units -> CSS px).
+    const w = state.size.width;
+    const h = state.size.height;
+    orbScreen.cx = w / 2 + (m.position.x / (viewport.width / 2)) * (w / 2);
+    orbScreen.cy = h / 2 - (m.position.y / (viewport.height / 2)) * (h / 2);
+    orbScreen.r = (s / viewport.height) * h;
+    orbScreen.opacity = u.uOpacity.value;
   });
 
   return (

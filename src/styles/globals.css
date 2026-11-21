@@ -420,6 +420,27 @@
   -webkit-text-stroke: 1px var(--ink);
 }
 
+/*
+  Orb ink (lib/ink.ts). The text is painted by its background: a paper disc where the
+  orb sits (--ox/--oy/--or, set per frame in the leaf's own px) over the base fill.
+  --ink-base is the normal ink; printed headings swap it for their progress fill.
+*/
+.ink-leaf {
+  background-image:
+    radial-gradient(
+      circle var(--or, 0.01px) at var(--ox, -9999px) var(--oy, -9999px),
+      var(--paper) 0%,
+      var(--paper) 80%,
+      transparent 100%
+    ),
+    var(--ink-base, linear-gradient(var(--ink), var(--ink)));
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
 .grain {
   pointer-events: none;
   position: fixed;
