@@ -105,7 +105,7 @@ export function Loader() {
       <div className="loader-inner flex h-full flex-col justify-between p-4 md:p-6">
         <div className="flex justify-between text-sm uppercase">
           <span>Manas Singh</span>
-          <span>/zero to shipped/</span>
+          <span>/merges on fridays/</span>
         </div>
 
         <div>
