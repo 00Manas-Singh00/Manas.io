@@ -441,6 +441,21 @@
   -webkit-text-fill-color: transparent;
 }
 
+/*
+  Printed headings (lib/print.ts): an ink outline that fills left to right as --print
+  goes 0 -> 1. Reduced motion sets --print-all on the heading and skips straight to ink.
+*/
+[data-print] .ink-leaf,
+[data-print].ink-leaf {
+  --p: calc(var(--print-all, var(--print, 0)) * 100%);
+  --ink-base: linear-gradient(
+    90deg,
+    var(--ink) var(--p),
+    transparent var(--p)
+  );
+  -webkit-text-stroke: 1px var(--ink);
+}
+
 .grain {
   pointer-events: none;
   position: fixed;

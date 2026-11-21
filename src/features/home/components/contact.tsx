@@ -167,6 +167,7 @@ export function Contact() {
       <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col">
         <h2
           data-ink
+          data-print
           className="contact-head max-w-[14ch] text-[clamp(2.4rem,10vw,7rem)] leading-[0.9] font-light uppercase"
         >
           Let&apos;s make something unreasonable.

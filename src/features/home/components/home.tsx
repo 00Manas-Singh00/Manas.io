@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { gsap, ScrollTrigger, useGSAP } from "../lib/gsap";
 import { startInkField } from "../lib/ink";
+import { startPrintHeads } from "../lib/print";
 import { About } from "./about";
 import { Capabilities } from "./capabilities";
 import { Contact } from "./contact";
@@ -71,8 +72,11 @@ export function Home() {
       });
     });
 
+    const stopPrint = startPrintHeads();
+
     // Pins and counters depend on final font metrics.
     document.fonts?.ready.then(() => ScrollTrigger.refresh());
+    return stopPrint;
   });
 
   return (
