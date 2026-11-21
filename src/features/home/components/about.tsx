@@ -56,7 +56,7 @@ export function About() {
       className="relative z-10 scroll-mt-20 px-4 py-24 md:px-6 md:py-40"
     >
       <div className="mx-auto max-w-[1440px] md:grid md:grid-cols-12 md:gap-6">
-        <p className="about-copy text-[clamp(1.75rem,3.6vw,3.25rem)] leading-[1.12] font-light md:col-span-10 md:col-start-2">
+        <p data-ink className="about-copy text-[clamp(1.75rem,3.6vw,3.25rem)] leading-[1.12] font-light md:col-span-10 md:col-start-2">
           {SUMMARY}
         </p>
         <p className="about-meta mt-12 text-sm uppercase md:col-span-6 md:col-start-2">

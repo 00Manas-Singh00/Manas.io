@@ -47,7 +47,11 @@ export function Work() {
     >
       <div className="mx-auto max-w-[1440px]">
         <div className="flex items-end justify-between border-b border-ink pb-2">
-          <h2 className="text-[clamp(3rem,8vw,7rem)] leading-[0.85] font-light uppercase">
+          <h2
+            data-ink
+            data-print
+            className="text-[clamp(3rem,8vw,7rem)] leading-[0.85] font-light uppercase"
+          >
             Experience
           </h2>
           <span className="text-[clamp(1.5rem,3vw,2.75rem)] font-light">

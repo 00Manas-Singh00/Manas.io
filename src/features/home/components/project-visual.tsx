@@ -146,6 +146,10 @@ export function ProjectVisual({
     let time = kind === "tide" ? 2 : 0;
     let invert = 0; // eased 0..1
     let hovering = false;
+    // The loupe needs a hovering pointer; touch keeps the plain plate.
+    const fine = window.matchMedia(
+      "(hover: hover) and (pointer: fine)",
+    ).matches;
     const pointer = { x: -1, y: -1, on: 0 };
     let ink: [number, number, number] = [42, 77, 245];
     let paper: [number, number, number] = [251, 251, 248];
@@ -308,7 +312,16 @@ export function ProjectVisual({
       const rows = Math.ceil(h / cell);
       const aspect = w / h;
       const maxR = cell * 0.52;
-      const pr2 = 0.022;
+      // A faint base screen keeps the plate reading as print, even where empty.
+      const dot = (f: number) => maxR * Math.max(0.09, Math.min(1, f));
+
+      // The loupe: a printer's magnifier that follows the pointer over the plate.
+      const px = pointer.x * w;
+      const py = pointer.y * h;
+      const inside = px >= 0 && px <= w && py >= 0 && py <= h;
+      const lens = inside && fine ? pointer.on : 0;
+      const L = (large ? 96 : 64) * (0.6 + 0.4 * lens);
+      const M = 2.6;
 
       ctx.fillStyle = fg;
       ctx.beginPath();
@@ -317,20 +330,58 @@ export function ProjectVisual({
         const v = y / h;
         for (let i = 0; i < cols; i++) {
           const x = i * cell + cell / 2;
-          const u = x / w;
-          let f = field(u, v, time, aspect);
-          if (pointer.on > 0.01) {
-            const dx = (u - pointer.x) * aspect;
-            const dy = v - pointer.y;
-            f += 0.55 * pointer.on * Math.exp(-(dx * dx + dy * dy) / pr2);
-          }
-          // A faint base screen keeps the plate reading as print, even where empty.
-          const r = maxR * Math.max(0.09, Math.min(1, f));
+          // Leave a clean ring around the lens so its edge reads.
+          if (lens > 0.02 && Math.hypot(x - px, y - py) < L + cell * 0.6)
+            continue;
+          const r = dot(field(x / w, v, time, aspect));
           ctx.moveTo(x + r, y);
           ctx.arc(x, y, r, 0, Math.PI * 2);
         }
       }
       ctx.fill();
+
+      if (lens > 0.02) {
+        // Magnify the real screen about the pointer: the dot at p is drawn at
+        // pointer + (p - pointer) * M, M times larger, clipped to the lens.
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(px, py, L, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.globalAlpha = Math.min(1, lens * 1.4);
+        ctx.beginPath();
+        const reach = L / M + cell;
+        const i0 = Math.max(0, Math.floor((px - reach) / cell));
+        const i1 = Math.min(cols - 1, Math.ceil((px + reach) / cell));
+        const j0 = Math.max(0, Math.floor((py - reach) / cell));
+        const j1 = Math.min(rows - 1, Math.ceil((py + reach) / cell));
+        for (let j = j0; j <= j1; j++) {
+          const y = j * cell + cell / 2;
+          for (let i = i0; i <= i1; i++) {
+            const x = i * cell + cell / 2;
+            const sx = px + (x - px) * M;
+            const sy = py + (y - py) * M;
+            const r = dot(field(x / w, y / h, time, aspect)) * M;
+            ctx.moveTo(sx + r, sy);
+            ctx.arc(sx, sy, r, 0, Math.PI * 2);
+          }
+        }
+        ctx.fill();
+        ctx.restore();
+
+        // Rim and a fine crosshair, like the reticle in a print loupe.
+        ctx.save();
+        ctx.globalAlpha = Math.min(1, lens * 1.4);
+        ctx.strokeStyle = fg;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(px, py, L, 0, Math.PI * 2);
+        ctx.moveTo(px - 6, py);
+        ctx.lineTo(px + 6, py);
+        ctx.moveTo(px, py - 6);
+        ctx.lineTo(px, py + 6);
+        ctx.stroke();
+        ctx.restore();
+      }
     };
 
     const loop = (now: number) => {
@@ -401,7 +452,10 @@ export function ProjectVisual({
     <canvas
       ref={ref}
       aria-hidden
-      className={cn("absolute inset-0 size-full", className)}
+      className={cn(
+        "absolute inset-0 size-full [@media(hover:hover)_and_(pointer:fine)]:cursor-none",
+        className,
+      )}
     />
   );
 }

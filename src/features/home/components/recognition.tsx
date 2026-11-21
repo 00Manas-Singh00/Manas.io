@@ -34,7 +34,11 @@ export function Recognition() {
       className="relative z-10 px-4 py-24 md:px-6 md:py-32"
     >
       <div className="mx-auto max-w-[1440px]">
-        <h2 className="mb-8 text-[clamp(3rem,8vw,7rem)] leading-[0.85] font-light uppercase">
+        <h2
+          data-ink
+          data-print
+          className="mb-8 text-[clamp(3rem,8vw,7rem)] leading-[0.85] font-light uppercase"
+        >
           Recognition
         </h2>
         <ul className="border-b border-ink">
