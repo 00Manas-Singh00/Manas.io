@@ -9,9 +9,29 @@ import { cn } from "@/lib/utils";
 
 import { NAV_ITEMS, PROFILE, SOCIALS } from "../data";
 import { scroller, scrollToId } from "../lib/lenis";
+import { isSoundOn, onSoundChange, setSound } from "../lib/sound";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+/** Opt-in sound toggle. Off by default; reads the remembered choice after mount. */
+export function SoundSwitch({ className }: { className?: string }) {
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    setOn(isSoundOn());
+    return onSoundChange(setOn);
+  }, []);
+  return (
+    <button
+      type="button"
+      onClick={() => setSound(!on)}
+      aria-pressed={on}
+      className={cn("group cursor-pointer text-sm uppercase", className)}
+    >
+      <RollText text={on ? "Sound on" : "Sound off"} />
+    </button>
+  );
+}
 
 export function ThemeSwitch({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
@@ -83,6 +103,7 @@ export function CompactBar({
         </div>
 
         <div className="flex items-center justify-end gap-5">
+          <SoundSwitch className="hidden md:block" />
           <ThemeSwitch className="hidden sm:block" />
           <button
             type="button"

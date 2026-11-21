@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { PROJECTS } from "../data";
 import { scroller } from "../lib/lenis";
+import { play } from "../lib/sound";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const SECRET = "shipit";
@@ -45,8 +46,16 @@ export function ShipIt() {
     if (!open) return;
     scroller.lenis?.stop();
     const t = window.setTimeout(() => setOpen(false), reduce ? 4000 : 6200);
+    // A tick as each log line lands (only if sound is on).
+    const ticks = Array.from({ length: PROJECTS.length + 3 }, (_, i) =>
+      window.setTimeout(
+        () => play("tick"),
+        (0.5 + i * (reduce ? 0 : 0.32)) * 1000,
+      ),
+    );
     return () => {
       window.clearTimeout(t);
+      ticks.forEach(window.clearTimeout);
       scroller.lenis?.start();
     };
   }, [open, reduce]);

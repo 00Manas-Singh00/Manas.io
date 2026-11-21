@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { gsap, ScrollTrigger, useGSAP } from "../lib/gsap";
 import { startInkField } from "../lib/ink";
 import { startPrintHeads } from "../lib/print";
+import { play } from "../lib/sound";
 import { About } from "./about";
 import { Capabilities } from "./capabilities";
 import { Contact } from "./contact";
@@ -55,6 +56,23 @@ export function Home() {
   useEffect(() => setOrbMode(prefersLiteOrb() ? "lite" : "webgl"), []);
   // The orb punches through the large type (see lib/ink.ts).
   useEffect(() => startInkField(), []);
+
+  // Opt-in sound for every link and button: a paper flick on hover, a click on press.
+  useEffect(() => {
+    const hit = (t: EventTarget | null) =>
+      (t as Element | null)?.closest?.("a, button") ?? null;
+    const onOver = (e: PointerEvent) => {
+      const el = hit(e.target);
+      if (el && el !== hit(e.relatedTarget)) play("flick");
+    };
+    const onClick = (e: MouseEvent) => hit(e.target) && play("click");
+    document.addEventListener("pointerover", onOver);
+    document.addEventListener("click", onClick, true);
+    return () => {
+      document.removeEventListener("pointerover", onOver);
+      document.removeEventListener("click", onClick, true);
+    };
+  }, []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   useGSAP(() => {

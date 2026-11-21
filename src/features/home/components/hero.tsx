@@ -10,7 +10,7 @@ import { onIntroDone } from "../lib/intro";
 import { scrollToId } from "../lib/lenis";
 import { orb } from "../lib/orb";
 import { RollText } from "./roll-text";
-import { ThemeSwitch } from "./site-nav";
+import { SoundSwitch, ThemeSwitch } from "./site-nav";
 
 const HERO_A = { x: -0.72, y: -0.42, scale: 0.42 };
 const HERO_B = { x: 0.04, y: -0.18, scale: 0.6 };
@@ -233,7 +233,10 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
           <div className="mt-6 md:mt-0">
             <div className="hero-fade flex justify-between pt-4 pb-2 text-xs uppercase md:text-sm">
               <span>Menu</span>
-              <ThemeSwitch />
+              <span className="flex gap-5">
+                <SoundSwitch />
+                <ThemeSwitch />
+              </span>
             </div>
             <ul>
               {NAV_ITEMS.map((item) => (
@@ -263,7 +266,10 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
         {/* Stage: headline left, portrait right. The scrub turns this into reference 2. */}
         <div className="hero-stage relative mt-8 grid flex-1 gap-6 md:mt-6 md:min-h-0 md:grid-cols-2">
           <div className="relative flex flex-col justify-between">
-            <h1 data-ink className="hero-headline max-w-full text-[clamp(2.1rem,4.1vw,4.4rem)] leading-[0.98] font-light uppercase will-change-transform md:w-max md:max-w-none">
+            <h1
+              data-ink
+              className="hero-headline max-w-full text-[clamp(2.1rem,4.1vw,4.4rem)] leading-[0.98] font-light uppercase will-change-transform md:w-max md:max-w-none"
+            >
               <span className="hero-line block">Hand me the</span>
               <span className="hero-line block">messy problem.</span>
               <span className="hero-line block">I&apos;ll ship it.</span>

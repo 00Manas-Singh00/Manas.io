@@ -1,6 +1,7 @@
 import type Lenis from "lenis";
 
 import { gsap, ScrollTrigger } from "./gsap";
+import { play } from "./sound";
 
 // Shared handle so nav links, the loader and modals can drive the one Lenis instance.
 export const scroller: { lenis: Lenis | null } = { lenis: null };
@@ -46,6 +47,7 @@ export function scrollToId(id: string) {
   const s = getSheet();
   const label = s.querySelector<HTMLElement>(".sheet-label")!;
   label.textContent = el.dataset.label ?? id;
+  play("turn");
 
   gsap
     .timeline({ onComplete: () => void (turning = false) })
