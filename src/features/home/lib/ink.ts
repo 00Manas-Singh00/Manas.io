@@ -15,7 +15,7 @@ import { orbScreen } from "./orb";
 // How much of the blurred orb counts as "solid" enough to flip the type.
 const CORE = 0.6;
 
-type Leaf = { el: HTMLElement; on: boolean };
+type Leaf = { el: HTMLElement; root: HTMLElement; on: boolean };
 
 function hasOwnText(el: HTMLElement) {
   for (const n of el.childNodes) {
@@ -31,7 +31,9 @@ function collect(): Leaf[] {
     for (const el of all) {
       if (!hasOwnText(el)) continue;
       el.classList.add("ink-leaf");
-      leaves.push({ el, on: false });
+      // Keep the lit state across re-scans, or a leaf lit just before one would
+      // never be switched off again.
+      leaves.push({ el, root, on: !!el.style.getPropertyValue("--or") });
     }
   });
   return leaves;
@@ -47,30 +49,42 @@ export function startInkField() {
 
     const r = orbScreen.r * CORE * Math.min(1, orbScreen.opacity * 1.4);
     const { cx, cy } = orbScreen;
+    const touches = (b: DOMRect) =>
+      b.width > 0 &&
+      cx + r > b.left &&
+      cx - r < b.right &&
+      cy + r > b.top &&
+      cy - r < b.bottom;
 
-    for (const leaf of leaves) {
-      const { el } = leaf;
-      if (r < 4) {
-        if (leaf.on) off(leaf);
-        continue;
+    // Read everything first, then write, so the style changes below never force a
+    // recalculation in the middle of the reads. Whole containers far from the orb
+    // are skipped with a single read.
+    const hits: { leaf: Leaf; b: DOMRect; sx: number; sy: number }[] = [];
+    if (r >= 4) {
+      const near = new Map<HTMLElement, boolean>();
+      for (const leaf of leaves) {
+        let ok = near.get(leaf.root);
+        if (ok === undefined) {
+          ok = touches(leaf.root.getBoundingClientRect());
+          near.set(leaf.root, ok);
+        }
+        if (!ok) continue;
+        const b = leaf.el.getBoundingClientRect();
+        if (!touches(b)) continue;
+        // Screen px -> the leaf's local px (undoes any scale on it or its ancestors).
+        const sx = leaf.el.offsetWidth ? leaf.el.offsetWidth / b.width : 1;
+        const sy = leaf.el.offsetHeight ? leaf.el.offsetHeight / b.height : 1;
+        hits.push({ leaf, b, sx, sy });
       }
-      const b = el.getBoundingClientRect();
-      const hit =
-        b.width > 0 &&
-        cx + r > b.left &&
-        cx - r < b.right &&
-        cy + r > b.top &&
-        cy - r < b.bottom;
-      if (!hit) {
-        if (leaf.on) off(leaf);
-        continue;
-      }
-      // Screen px -> the leaf's local px (undoes any scale on it or its ancestors).
-      const sx = el.offsetWidth ? el.offsetWidth / b.width : 1;
-      const sy = el.offsetHeight ? el.offsetHeight / b.height : 1;
-      el.style.setProperty("--ox", `${(cx - b.left) * sx}px`);
-      el.style.setProperty("--oy", `${(cy - b.top) * sy}px`);
-      el.style.setProperty("--or", `${r * sx}px`);
+    }
+
+    const lit = new Set(hits.map((h) => h.leaf));
+    for (const leaf of leaves) if (leaf.on && !lit.has(leaf)) off(leaf);
+    for (const { leaf, b, sx, sy } of hits) {
+      const s = leaf.el.style;
+      s.setProperty("--ox", `${(cx - b.left) * sx}px`);
+      s.setProperty("--oy", `${(cy - b.top) * sy}px`);
+      s.setProperty("--or", `${r * sx}px`);
       leaf.on = true;
     }
   };
