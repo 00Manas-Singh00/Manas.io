@@ -2,7 +2,7 @@
 
 export const PROFILE = {
   name: "Manas Singh",
-  tagline: "/full-stack, forward-deployed/",
+  tagline: "/zero to shipped/",
   role: "Associate Software Engineer",
   company: "Sage Technologies",
   // Base64 so the address is not sitting in the HTML for scrapers.

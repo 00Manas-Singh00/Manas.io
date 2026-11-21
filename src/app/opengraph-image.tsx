@@ -11,7 +11,7 @@ const INK = "#1d3bd1";
 const SOFT = "#4c63d9";
 
 const TEXT =
-  "MANAS SINGH/FULL-STACK, FORWARD-DEPLOYED/HAND ME THE MESSY PROBLEM. I'LL SHIP IT.MANAS-IO.VERCEL.APPTYPESCRIPT · REACT · PYTHON · AI";
+  "MANAS SINGH/ZERO TO SHIPPED/HAND ME THE MESSY PROBLEM. I'LL SHIP IT.MANAS-IO.VERCEL.APPTYPESCRIPT · REACT · PYTHON · AI";
 
 /** Barlow from Google Fonts, subset to the card's text. Falls back to the default font. */
 async function barlow(weight: 300 | 400) {
@@ -78,7 +78,7 @@ export default async function Image() {
           }}
         >
           <span>MANAS SINGH</span>
-          <span>/FULL-STACK, FORWARD-DEPLOYED/</span>
+          <span>/ZERO TO SHIPPED/</span>
         </div>
 
         <div
