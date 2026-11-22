@@ -23,6 +23,7 @@ import { Poster } from "./poster";
 import { Press } from "./press";
 import { Principles } from "./principles";
 import { PrintHead } from "./print-head";
+import { PrintResume } from "./print-resume";
 import { Projects } from "./projects";
 import { Recognition } from "./recognition";
 import { RecruiterView } from "./recruiter";
@@ -161,6 +162,7 @@ export function Home({
       <CommandPalette />
       <PrintHead />
       <Poster />
+      <PrintResume />
       <div aria-hidden className="grain" />
     </div>
   );

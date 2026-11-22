@@ -13,6 +13,7 @@ import { decodeEmail, scroller, scrollToId } from "../lib/lenis";
 import { setRecruiter } from "../lib/recruiter";
 import { isSoundOn, setSound } from "../lib/sound";
 import { openPoster } from "./poster";
+import { printResume } from "./print-resume";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -118,6 +119,13 @@ export function CommandPalette() {
         group: "Actions",
         label: "Open résumé (PDF)",
         run: () => window.open(PROFILE.resumeHref, "_blank"),
+      },
+      {
+        id: "print-resume",
+        group: "Actions",
+        label: "Print résumé",
+        hint: "One page, A4",
+        run: printResume,
       },
       {
         id: "recruiter",
