@@ -7,6 +7,7 @@ import * as THREE from "three";
 
 import { scroller } from "../lib/lenis";
 import { orb, orbScreen, VIEW_H } from "../lib/orb";
+import { useRiso } from "./riso";
 
 /**
  * Liquid ink. A full-screen metaball field: one main body that follows the `orb` store
@@ -212,6 +213,7 @@ function Ink({
 }
 
 export default function OrbCanvas() {
+  const riso = useRiso();
   const { resolvedTheme } = useTheme();
   const dark = resolvedTheme === "dark";
 
@@ -233,8 +235,8 @@ export default function OrbCanvas() {
           eventPrefix="client"
         >
           <Ink
-            ink={dark ? "#4a5ef0" : "#1d3bd1"}
-            core={dark ? "#1c2fc9" : "#1530c4"}
+            ink={riso ? "#ff48b0" : dark ? "#4a5ef0" : "#1d3bd1"}
+            core={riso ? "#ff2a9d" : dark ? "#1c2fc9" : "#1530c4"}
             dark={dark}
           />
         </Canvas>

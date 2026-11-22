@@ -9,10 +9,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 import { NAV_ITEMS, PROFILE, PROJECTS, SOCIALS } from "../data";
+import { inkNavigate } from "../lib/ink-bleed";
 import { decodeEmail, scroller, scrollToId } from "../lib/lenis";
 import { setRecruiter } from "../lib/recruiter";
 import { isSoundOn, setSound } from "../lib/sound";
 import { openPoster } from "./poster";
+import { printResume } from "./print-resume";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -98,7 +100,7 @@ export function CommandPalette() {
         group: "Projects",
         label: p.title,
         hint: p.caption,
-        run: () => router.push(`/projects/${p.id}`),
+        run: () => void inkNavigate((h) => router.push(h), `/projects/${p.id}`),
       })),
       {
         id: "copy-email",
@@ -118,6 +120,13 @@ export function CommandPalette() {
         group: "Actions",
         label: "Open résumé (PDF)",
         run: () => window.open(PROFILE.resumeHref, "_blank"),
+      },
+      {
+        id: "print-resume",
+        group: "Actions",
+        label: "Print résumé",
+        hint: "One page, A4",
+        run: printResume,
       },
       {
         id: "recruiter",

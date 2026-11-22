@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import type { LatestCommit } from "../lib/github";
 import { gsap, ScrollTrigger, useGSAP } from "../lib/gsap";
 import { startInkField } from "../lib/ink";
+import { startMisregistration } from "../lib/misreg";
 import { startPrintHeads } from "../lib/print";
 import { play } from "../lib/sound";
 import { markSeen, setSections } from "../lib/visit";
@@ -23,9 +24,11 @@ import { Poster } from "./poster";
 import { Press } from "./press";
 import { Principles } from "./principles";
 import { PrintHead } from "./print-head";
+import { PrintResume } from "./print-resume";
 import { Projects } from "./projects";
 import { Recognition } from "./recognition";
 import { RecruiterView } from "./recruiter";
+import { RisoMode } from "./riso";
 import { ShipIt } from "./ship-it";
 import { CompactBar, MenuOverlay } from "./site-nav";
 import { SmoothScroll } from "./smooth-scroll";
@@ -67,6 +70,8 @@ export function Home({
   useEffect(() => setOrbMode(prefersLiteOrb() ? "lite" : "webgl"), []);
   // The orb punches through the large type (see lib/ink.ts).
   useEffect(() => startInkField(), []);
+  // Fast scrolling knocks the big type out of register for a moment.
+  useEffect(() => startMisregistration(), []);
 
   // Opt-in sound for every link and button: a paper flick on hover, a click on press.
   useEffect(() => {
@@ -161,6 +166,8 @@ export function Home({
       <CommandPalette />
       <PrintHead />
       <Poster />
+      <PrintResume />
+      <RisoMode />
       <div aria-hidden className="grain" />
     </div>
   );

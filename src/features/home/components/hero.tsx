@@ -9,6 +9,7 @@ import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 import { onIntroDone } from "../lib/intro";
 import { scrollToId } from "../lib/lenis";
 import { orb } from "../lib/orb";
+import { HalftonePortrait } from "./halftone-portrait";
 import { RecruiterSwitch } from "./recruiter";
 import { RollText } from "./roll-text";
 import { SoundSwitch, ThemeSwitch } from "./site-nav";
@@ -41,7 +42,9 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
         gsap.set(".hero-rule", { scaleX: 0 });
         gsap.set(".hero-fade", { opacity: 0, y: 12 });
         gsap.set(".hero-portrait-inner", { clipPath: "inset(100% 0% 0% 0%)" });
-        gsap.set(".hero-portrait-inner img", { scale: 1.3 });
+        gsap.set(".hero-portrait-inner img, .hero-portrait-inner canvas", {
+          scale: 1.3,
+        });
       }
 
       // Everything above is hidden by JS, so the reveal must never depend on a single hand-off.
@@ -58,7 +61,7 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
             ".hero-rule",
             ".hero-fade",
             ".hero-portrait-inner",
-            ".hero-portrait-inner img",
+            ".hero-portrait-inner img, .hero-portrait-inner canvas",
           ],
           { clearProps: "transform,opacity,clipPath" },
         );
@@ -89,7 +92,11 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
             },
             0,
           )
-          .to(".hero-portrait-inner img", { scale: 1, duration: 2.2 }, 0.1)
+          .to(
+            ".hero-portrait-inner img, .hero-portrait-inner canvas",
+            { scale: 1, duration: 2.2 },
+            0.1,
+          )
           .to(
             ".hero-fade",
             { opacity: 1, y: 0, stagger: 0.05, duration: 1 },
@@ -141,6 +148,8 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
               invalidateOnRefresh: true,
               onUpdate: (self) => {
                 const p = self.progress;
+                // The halftone portrait dissolves as the hero scrolls away.
+                root.current?.style.setProperty("--hero-p", p.toFixed(3));
                 gsap.killTweensOf(orb, "x,y,scale");
                 orb.x = gsap.utils.interpolate(HERO_A.x, HERO_B.x, p);
                 orb.y = gsap.utils.interpolate(HERO_A.y, HERO_B.y, p);
@@ -295,8 +304,8 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
                   className="absolute inset-0 size-full object-cover object-[50%_30%] contrast-[1.15] grayscale"
                   fetchPriority="high"
                 />
+                <HalftonePortrait src={PROFILE.portrait} />
               </div>
-              <div className="absolute inset-0 bg-ink opacity-0 mix-blend-screen transition-opacity duration-700 hover:opacity-60" />
             </div>
           </div>
         </div>

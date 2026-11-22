@@ -2,7 +2,6 @@
 
 import { ArrowDownRight, ArrowUpRight, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -19,6 +18,7 @@ import {
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 import { scroller, scrollToId } from "../lib/lenis";
 import { moveOrb } from "../lib/orb";
+import { InkLink } from "./ink-link";
 import { ProjectVisual } from "./project-visual";
 import { RollText } from "./roll-text";
 
@@ -184,7 +184,10 @@ export function Projects() {
 
         {/* SPRING /24 from reference 3, rewritten for this page. */}
         <div className="mt-10 grid items-end gap-6 lg:mt-auto lg:grid-cols-[auto_1fr] lg:gap-12">
-          <p data-ink className="proj-big text-[clamp(4rem,10.5vw,10.5rem)] leading-[0.8] font-light whitespace-nowrap uppercase">
+          <p
+            data-ink
+            className="proj-big text-[clamp(4rem,10.5vw,10.5rem)] leading-[0.8] font-light whitespace-nowrap uppercase"
+          >
             Projects
           </p>
           <div className="proj-tail flex items-end justify-between gap-6">
@@ -318,13 +321,13 @@ function ProjectSheet({
 
               <div className="mt-10 flex flex-wrap gap-3">
                 {CASE_STUDIES[project.id] && (
-                  <Link
+                  <InkLink
                     href={`/projects/${project.id}`}
                     className="group inline-flex w-fit items-center gap-2 rounded-full bg-ink px-5 py-2 text-paper uppercase transition-transform active:scale-[0.97]"
                   >
                     <RollText text="Read the case study" />
                     <ArrowUpRight className="size-4" strokeWidth={1.5} />
-                  </Link>
+                  </InkLink>
                 )}
                 {project.href && (
                   <a

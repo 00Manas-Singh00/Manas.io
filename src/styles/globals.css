@@ -442,6 +442,45 @@
 }
 
 /*
+  Riso mode (components/riso.tsx, Konami code): a two-ink risograph print. Riso blue
+  on off-white stock, a fluorescent pink plate slightly out of register under the big
+  type, heavier grain, and the portrait overprinted in both inks. Beats dark mode.
+*/
+html.riso,
+html.riso.dark {
+  --paper: #f1ece0;
+  --ink: #0078bf;
+  --orb: #ff48b0;
+  --orb-core: #ff2a9d;
+}
+html.riso [data-ink] {
+  filter: drop-shadow(2.6px -1.6px 0 color-mix(in oklab, #ff48b0 78%, transparent));
+}
+html.riso .grain {
+  opacity: 0.11;
+}
+html.riso .hero-portrait-inner {
+  background: #ff48b0;
+}
+html.riso .hero-portrait-inner img {
+  mix-blend-mode: multiply;
+  filter: grayscale(1) contrast(1.35) brightness(1.08);
+}
+
+/*
+  Misregistration (lib/misreg.ts): while scrolling fast, big type gains an offset
+  second ink. Only active while html.is-misreg is set, so idle pages pay nothing.
+*/
+.is-misreg [data-ink] {
+  filter: drop-shadow(
+    calc(var(--mis, 0) * 1px)
+      calc(var(--mis, 0) * -0.55px)
+      0
+      color-mix(in oklab, #ff3fa4 62%, transparent)
+  );
+}
+
+/*
   Printed headings (lib/print.ts): an ink outline that fills left to right as --print
   goes 0 -> 1. Reduced motion sets --print-all on the heading and skips straight to ink.
 */
@@ -471,4 +510,72 @@ html.lenis, html.lenis body { height: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   .roll-char, .ink-fill { transition: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Printable résumé (components/print-resume.tsx).                     */
+/* Hidden on screen; printing the page prints only this, on one A4.   */
+/* ------------------------------------------------------------------ */
+.print-resume { display: none; }
+
+@media print {
+  @page { size: A4; margin: 11mm 12mm; }
+
+  /* Always a white page with the light ink, whatever the theme. */
+  :root, .dark { --paper: #ffffff; --ink: #1d3bd1; }
+  html, body { background: #fff !important; }
+
+  /* Only the résumé: hide the page, overlays and portals around it. */
+  body > :not(:has(.print-resume)),
+  .home > :not(.print-resume) { display: none !important; }
+  .home { min-height: 0 !important; background: #fff !important; }
+
+  .print-resume {
+    display: block;
+    color: #1d3bd1;
+    font-family: var(--font-barlow), ui-sans-serif, system-ui;
+    font-size: 8.4pt;
+    line-height: 1.32;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print-resume h1 {
+    font-size: 26pt; font-weight: 300; line-height: 0.95;
+    text-transform: uppercase; letter-spacing: -0.01em;
+  }
+  .print-resume h2 {
+    margin: 9pt 0 4pt; padding-top: 3pt;
+    border-top: 0.75pt solid #1d3bd1;
+    font-size: 8pt; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .print-resume section > h2:first-child,
+  .print-resume aside > h2:first-child { margin-top: 0; }
+  .print-resume ul { list-style: none; padding: 0; margin: 0; }
+  .print-resume li { position: relative; padding-left: 8pt; margin-bottom: 2pt; }
+  .print-resume li::before {
+    content: ""; position: absolute; left: 1pt; top: 0.62em;
+    width: 2.6pt; height: 2.6pt; border-radius: 50%; background: #1d3bd1;
+  }
+  .pr-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 16pt; padding-bottom: 6pt; border-bottom: 1.2pt solid #1d3bd1;
+  }
+  .pr-role { margin-top: 3pt; font-size: 9pt; }
+  .pr-contact li { padding-left: 0; margin: 0; text-align: right; }
+  .pr-contact li::before { display: none; }
+  .pr-summary { margin: 7pt 0 2pt; font-size: 9pt; max-width: 64em; }
+  .pr-grid {
+    display: grid; grid-template-columns: 1.55fr 1fr; gap: 16pt;
+    margin-top: 6pt;
+  }
+  .pr-role-block { margin-bottom: 6pt; break-inside: avoid; }
+  .pr-row { display: flex; justify-content: space-between; gap: 8pt; font-size: 9pt; }
+  .pr-intro { margin: 2pt 0 4pt; opacity: 0.85; }
+  .pr-chapter { margin-top: 4pt; break-inside: avoid; }
+  .pr-chapter-title { font-weight: 500; margin-bottom: 2pt; }
+  .pr-chapter-title span { font-weight: 400; opacity: 0.75; }
+  .pr-project { margin-bottom: 5pt; break-inside: avoid; }
+  .pr-stack { opacity: 0.7; font-size: 7.6pt; }
+  .pr-skill { margin-bottom: 2pt; }
 }
