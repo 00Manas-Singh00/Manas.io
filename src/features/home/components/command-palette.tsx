@@ -11,10 +11,12 @@ import { cn } from "@/lib/utils";
 import { NAV_ITEMS, PROFILE, PROJECTS, SOCIALS } from "../data";
 import { inkNavigate } from "../lib/ink-bleed";
 import { decodeEmail, scroller, scrollToId } from "../lib/lenis";
+import { markThemeChosen } from "../lib/paper";
 import { setRecruiter } from "../lib/recruiter";
 import { isSoundOn, setSound } from "../lib/sound";
 import { openPoster } from "./poster";
 import { printResume } from "./print-resume";
+import { toggleProof } from "./proof-mode";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -139,7 +141,10 @@ export function CommandPalette() {
         id: "theme",
         group: "Actions",
         label: `Switch to ${resolvedTheme === "dark" ? "light" : "dark"} theme`,
-        run: () => setTheme(resolvedTheme === "dark" ? "light" : "dark"),
+        run: () => {
+          markThemeChosen();
+          setTheme(resolvedTheme === "dark" ? "light" : "dark");
+        },
       },
       {
         id: "sound",
@@ -153,6 +158,13 @@ export function CommandPalette() {
         label: "Print my visit",
         hint: "A poster of your visit",
         run: openPoster,
+      },
+      {
+        id: "proof",
+        group: "Actions",
+        label: "Proof mode",
+        hint: "Or hold Shift",
+        run: toggleProof,
       },
       {
         id: "ship",

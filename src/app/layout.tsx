@@ -6,6 +6,7 @@ import type { WebSite, WithContext } from "schema-dts";
 
 import { Providers } from "@/components/providers";
 import { META_THEME_COLORS, SITE_INFO } from "@/config/site";
+import { paperScript } from "@/features/home/lib/paper";
 import { USER } from "@/features/profile/data/user";
 import { fontMono, fontSans } from "@/lib/fonts";
 
@@ -111,13 +112,15 @@ export default function RootLayout({
       <head>
         <script
           type="text/javascript"
-          dangerouslySetInnerHTML={{ __html: darkModeScript }}
+          dangerouslySetInnerHTML={{ __html: paperScript + darkModeScript }}
         />
         {/*
           Thanks @tailwindcss. We inject the script via the `<Script/>` tag again,
           since we found the regular `<script>` tag to not execute when rendering a not-found page.
          */}
-        <Script src={`data:text/javascript;base64,${btoa(darkModeScript)}`} />
+        <Script
+          src={`data:text/javascript;base64,${btoa(paperScript + darkModeScript)}`}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

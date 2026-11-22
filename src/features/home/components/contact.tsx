@@ -170,6 +170,7 @@ export function Contact() {
         <h2
           data-ink
           data-print
+          data-proof="Contact · same printed heading; the orb punches through the type"
           className="contact-head max-w-[14ch] text-[clamp(2.4rem,10vw,7rem)] leading-[0.9] font-light uppercase"
         >
           Let&apos;s make something unreasonable.

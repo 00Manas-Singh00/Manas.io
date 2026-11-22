@@ -344,8 +344,9 @@
   --font-display: var(--font-barlow);
 }
 
+/* --paper-tod: the stock on the visitor's clock (lib/paper.ts). Dark and riso override. */
 :root {
-  --paper: #f3efe6;
+  --paper: var(--paper-tod, #f3efe6);
   --ink: #1d3bd1;
   --orb: #1d3bd1;
   --orb-core: #1530c4;

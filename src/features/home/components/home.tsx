@@ -18,13 +18,16 @@ import { CommandPalette } from "./command-palette";
 import { Contact } from "./contact";
 import { GithubStrip } from "./github-strip";
 import { Hero } from "./hero";
+import { LastPage } from "./last-page";
 import { Loader } from "./loader";
+import { PaperClock } from "./paper-clock";
 import { Poster } from "./poster";
 import { Press } from "./press";
 import { Principles } from "./principles";
 import { PrintHead } from "./print-head";
 import { PrintResume } from "./print-resume";
 import { Projects } from "./projects";
+import { ProofMode } from "./proof-mode";
 import { Recognition } from "./recognition";
 import { RecruiterView } from "./recruiter";
 import { RisoMode } from "./riso";
@@ -165,6 +168,9 @@ export function Home({
       <Poster />
       <PrintResume />
       <RisoMode />
+      <ProofMode />
+      <LastPage />
+      <PaperClock />
       <div aria-hidden className="grain" />
     </div>
   );

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 import { NAV_ITEMS, PROFILE, SOCIALS } from "../data";
 import { scroller, scrollToId } from "../lib/lenis";
+import { markThemeChosen } from "../lib/paper";
 import { isSoundOn, onSoundChange, setSound } from "../lib/sound";
 import { PaletteButton } from "./command-palette";
 import { RecruiterSwitch } from "./recruiter";
@@ -44,7 +45,10 @@ export function ThemeSwitch({ className }: { className?: string }) {
   return (
     <button
       type="button"
-      onClick={() => setTheme(next)}
+      onClick={() => {
+        markThemeChosen();
+        setTheme(next);
+      }}
       className={cn("group cursor-pointer text-sm uppercase", className)}
       aria-label={mounted ? `Switch to ${next} theme` : "Toggle theme"}
     >
