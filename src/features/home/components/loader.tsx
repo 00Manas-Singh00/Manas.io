@@ -12,7 +12,7 @@ import { canRunPress, pressState } from "../lib/press";
 
 const SEEN_KEY = "manas-io:intro-seen";
 // How long the loader waits for the 3D press before printing the plain way.
-const PRESS_WAIT_MS = 900;
+const PRESS_WAIT_MS = 1500;
 // How long the press takes, from inking to the sheet filling the screen.
 const PRESS_SECONDS = 3.4;
 
