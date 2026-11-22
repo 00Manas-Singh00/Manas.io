@@ -18,6 +18,7 @@ import { CommandPalette } from "./command-palette";
 import { Contact } from "./contact";
 import { GithubStrip } from "./github-strip";
 import { Hero } from "./hero";
+import { LastPage } from "./last-page";
 import { Loader } from "./loader";
 import { Poster } from "./poster";
 import { Press } from "./press";
@@ -167,6 +168,7 @@ export function Home({
       <PrintResume />
       <RisoMode />
       <ProofMode />
+      <LastPage />
       <div aria-hidden className="grain" />
     </div>
   );
