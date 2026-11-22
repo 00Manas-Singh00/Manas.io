@@ -49,6 +49,7 @@ export function Work() {
         <div className="flex items-end justify-between border-b border-ink pb-2">
           <h2
             data-ink
+            data-proof="Printed heading · outline to ink, left to right, line by line"
             data-print
             className="text-[clamp(3rem,8vw,7rem)] leading-[0.85] font-light uppercase"
           >

@@ -143,7 +143,10 @@ export function Projects() {
               className="group cursor-pointer text-left"
               aria-label={`Open ${p.title}`}
             >
-              <div className="proj-card overflow-hidden">
+              <div
+                data-proof="Plates · canvas halftone, 7.5px cells · loupe and corner peel on hover"
+                className="proj-card overflow-hidden"
+              >
                 <motion.div
                   layoutId={`frame-${p.id}`}
                   data-sheet

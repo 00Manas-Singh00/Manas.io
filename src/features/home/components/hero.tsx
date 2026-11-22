@@ -279,6 +279,7 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
           <div className="relative flex flex-col justify-between">
             <h1
               data-ink
+              data-proof="Headline · Barlow 300, clamp(2.1rem → 4.4rem) · scales to fill the stage as you scroll"
               className="hero-headline max-w-full text-[clamp(2.1rem,4.1vw,4.4rem)] leading-[0.98] font-light uppercase will-change-transform md:w-max md:max-w-none"
             >
               <span className="hero-line block">Hand me the</span>
@@ -294,7 +295,10 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
             </div>
           </div>
 
-          <div className="hero-portrait relative aspect-[4/5] md:aspect-auto">
+          <div
+            data-proof="Portrait · live halftone, dots sized by darkness · the loupe shows the photo"
+            className="hero-portrait relative aspect-[4/5] md:aspect-auto"
+          >
             <div className="hero-portrait-inner absolute inset-0 overflow-hidden">
               <div className="hero-portrait-pan absolute inset-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}

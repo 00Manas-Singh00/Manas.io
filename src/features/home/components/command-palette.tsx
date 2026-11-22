@@ -15,6 +15,7 @@ import { setRecruiter } from "../lib/recruiter";
 import { isSoundOn, setSound } from "../lib/sound";
 import { openPoster } from "./poster";
 import { printResume } from "./print-resume";
+import { toggleProof } from "./proof-mode";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -153,6 +154,13 @@ export function CommandPalette() {
         label: "Print my visit",
         hint: "A poster of your visit",
         run: openPoster,
+      },
+      {
+        id: "proof",
+        group: "Actions",
+        label: "Proof mode",
+        hint: "Or hold Shift",
+        run: toggleProof,
       },
       {
         id: "ship",

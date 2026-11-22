@@ -117,6 +117,7 @@ export function Principles() {
   return (
     <section
       ref={root}
+      data-proof="Rules · letters drop with a bounce, then lean away from the cursor"
       data-label="How I work"
       className="relative z-10 px-4 py-24 md:px-6 md:py-40"
     >

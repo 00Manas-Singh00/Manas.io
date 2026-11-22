@@ -25,6 +25,7 @@ import { Principles } from "./principles";
 import { PrintHead } from "./print-head";
 import { PrintResume } from "./print-resume";
 import { Projects } from "./projects";
+import { ProofMode } from "./proof-mode";
 import { Recognition } from "./recognition";
 import { RecruiterView } from "./recruiter";
 import { RisoMode } from "./riso";
@@ -165,6 +166,7 @@ export function Home({
       <Poster />
       <PrintResume />
       <RisoMode />
+      <ProofMode />
       <div aria-hidden className="grain" />
     </div>
   );

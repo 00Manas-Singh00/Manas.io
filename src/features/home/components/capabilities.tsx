@@ -123,6 +123,7 @@ export function Capabilities() {
   return (
     <section
       ref={root}
+      data-proof="Type case · matter-js physics, 3D type you can throw"
       data-label="Stack"
       className="relative z-10 py-24 md:py-32"
     >
