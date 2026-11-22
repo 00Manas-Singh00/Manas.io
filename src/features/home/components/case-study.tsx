@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import Link from "next/link";
 import { useRef } from "react";
 
 import { fontDisplay } from "@/lib/fonts";
@@ -9,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 import type { CaseStudy, Project } from "../data";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
+import { InkLink } from "./ink-link";
 import { ProjectVisual } from "./project-visual";
 import { RollText } from "./roll-text";
 import { ThemeSwitch } from "./site-nav";
@@ -107,10 +107,10 @@ export function CaseStudyPage({
 
       <div className="mx-auto max-w-[1440px]">
         <header className="flex items-center justify-between pb-2 text-xs uppercase md:text-sm">
-          <Link href="/#projects" className="group flex items-center gap-2">
+          <InkLink href="/#projects" className="group flex items-center gap-2">
             <ArrowLeft className="size-4" strokeWidth={1.5} />
             <RollText text="Manas Singh" />
-          </Link>
+          </InkLink>
           <div className="flex items-center gap-6">
             <span>Case study /0{index + 1}</span>
             <ThemeSwitch />
@@ -204,7 +204,7 @@ export function CaseStudyPage({
           </Section>
         </div>
 
-        <Link
+        <InkLink
           href={`/projects/${next.id}`}
           className="group mt-24 block border-t border-ink pt-4 md:mt-32"
         >
@@ -221,13 +221,13 @@ export function CaseStudyPage({
               strokeWidth={1}
             />
           </span>
-        </Link>
+        </InkLink>
 
         <p className="mt-12 flex justify-between border-t border-ink pt-3 text-xs uppercase">
           <span>© {new Date().getFullYear()} Manas Singh</span>
-          <Link href="/#contact" className="group">
+          <InkLink href="/#contact" className="group">
             <RollText text="Get in touch" />
-          </Link>
+          </InkLink>
         </p>
       </div>
     </div>

@@ -2,7 +2,6 @@
 
 import { ArrowUpRight, Check, Copy, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -21,6 +20,7 @@ import {
   readRecruiterFromUrl,
   setRecruiter,
 } from "../lib/recruiter";
+import { InkLink } from "./ink-link";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -195,7 +195,7 @@ export function RecruiterView() {
                 <ul>
                   {PROJECTS.map((p) => (
                     <li key={p.id} className="border-b border-ink/30">
-                      <Link
+                      <InkLink
                         href={`/projects/${p.id}`}
                         onClick={() => setRecruiter(false)}
                         className="group flex items-center justify-between gap-4 py-3"
@@ -212,7 +212,7 @@ export function RecruiterView() {
                           className="size-5 shrink-0 transition-transform duration-500 group-hover:rotate-45"
                           strokeWidth={1.25}
                         />
-                      </Link>
+                      </InkLink>
                     </li>
                   ))}
                 </ul>
