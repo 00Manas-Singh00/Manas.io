@@ -12,6 +12,7 @@ import { NAV_ITEMS, PROFILE, PROJECTS, SOCIALS } from "../data";
 import { decodeEmail, scroller, scrollToId } from "../lib/lenis";
 import { setRecruiter } from "../lib/recruiter";
 import { isSoundOn, setSound } from "../lib/sound";
+import { openPoster } from "./poster";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -136,6 +137,13 @@ export function CommandPalette() {
         group: "Actions",
         label: isSoundOn() ? "Turn sound off" : "Turn sound on",
         run: () => setSound(!isSoundOn()),
+      },
+      {
+        id: "poster",
+        group: "Actions",
+        label: "Print my visit",
+        hint: "A poster of your visit",
+        run: openPoster,
       },
       {
         id: "ship",

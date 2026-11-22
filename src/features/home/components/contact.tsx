@@ -14,6 +14,7 @@ import { PROFILE, SOCIALS } from "../data";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 import { decodeEmail, scrollToId } from "../lib/lenis";
 import { moveOrb } from "../lib/orb";
+import { PosterButton } from "./poster";
 import { RollText } from "./roll-text";
 
 /** Magnetic pill: leans toward the pointer with a spring, settles back on leave. */
@@ -227,6 +228,7 @@ export function Contact() {
           </p>
           <p className="mt-4 flex justify-between text-xs uppercase">
             <span>© {new Date().getFullYear()} Manas Singh</span>
+            <PosterButton />
             <span className="hidden md:inline">
               Psst: type &ldquo;ship it&rdquo; anywhere
             </span>
