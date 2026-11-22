@@ -14,6 +14,7 @@ import { PROFILE, SOCIALS } from "../data";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 import { decodeEmail, scrollToId } from "../lib/lenis";
 import { moveOrb } from "../lib/orb";
+import { Guestbook } from "./guestbook";
 import { PosterButton } from "./poster";
 import { RollText } from "./roll-text";
 
@@ -181,6 +182,8 @@ export function Contact() {
           <MagneticPill />
           <CopyEmail />
         </div>
+
+        <Guestbook />
 
         <div className="mt-auto pt-20">
           <div className="flex flex-wrap items-center justify-between gap-4 border-t border-ink pt-3 text-sm uppercase">
