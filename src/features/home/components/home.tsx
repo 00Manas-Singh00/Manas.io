@@ -20,6 +20,7 @@ import { Hero } from "./hero";
 import { Loader } from "./loader";
 import { Press } from "./press";
 import { Principles } from "./principles";
+import { PrintHead } from "./print-head";
 import { Projects } from "./projects";
 import { Recognition } from "./recognition";
 import { RecruiterView } from "./recruiter";
@@ -151,6 +152,7 @@ export function Home({
       <ShipIt />
       <RecruiterView />
       <CommandPalette />
+      <PrintHead />
       <div aria-hidden className="grain" />
     </div>
   );
