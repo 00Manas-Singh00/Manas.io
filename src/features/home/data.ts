@@ -251,6 +251,26 @@ export const RECOGNITION = [
 ];
 
 /**
+ * The recruiter view's proof, in the order a busy reader should see it. Every figure
+ * also appears in WORK or RECOGNITION above; keep them in step.
+ */
+export const HIGHLIGHTS = [
+  {
+    value: "3 min → 10 s",
+    label: "Per document, after the AI pipeline I built went to production",
+  },
+  {
+    value: "99%",
+    label: "Field-level extraction accuracy on a labeled test set",
+  },
+  {
+    value: "1,000 / mo",
+    label: "Documents processed across 3+ enterprise clients",
+  },
+  { value: "2×", label: "National hackathon winner, 200+ teams each" },
+];
+
+/**
  * Long-form write-ups for /projects/[id]. Every claim here comes from the résumé;
  * add screenshots, numbers and stories as they become available.
  */
