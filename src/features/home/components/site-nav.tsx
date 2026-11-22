@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { NAV_ITEMS, PROFILE, SOCIALS } from "../data";
 import { scroller, scrollToId } from "../lib/lenis";
 import { isSoundOn, onSoundChange, setSound } from "../lib/sound";
+import { RecruiterSwitch } from "./recruiter";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -103,6 +104,7 @@ export function CompactBar({
         </div>
 
         <div className="flex items-center justify-end gap-5">
+          <RecruiterSwitch className="hidden sm:block" />
           <SoundSwitch className="hidden md:block" />
           <ThemeSwitch className="hidden sm:block" />
           <button

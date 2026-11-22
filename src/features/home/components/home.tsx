@@ -19,6 +19,7 @@ import { Press } from "./press";
 import { Principles } from "./principles";
 import { Projects } from "./projects";
 import { Recognition } from "./recognition";
+import { RecruiterView } from "./recruiter";
 import { ShipIt } from "./ship-it";
 import { CompactBar, MenuOverlay } from "./site-nav";
 import { SmoothScroll } from "./smooth-scroll";
@@ -140,6 +141,7 @@ export function Home() {
       <Contact />
 
       <ShipIt />
+      <RecruiterView />
       <div aria-hidden className="grain" />
     </div>
   );

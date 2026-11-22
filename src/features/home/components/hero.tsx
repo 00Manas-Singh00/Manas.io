@@ -9,6 +9,7 @@ import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 import { onIntroDone } from "../lib/intro";
 import { scrollToId } from "../lib/lenis";
 import { orb } from "../lib/orb";
+import { RecruiterSwitch } from "./recruiter";
 import { RollText } from "./roll-text";
 import { SoundSwitch, ThemeSwitch } from "./site-nav";
 
@@ -234,7 +235,8 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
             <div className="hero-fade flex justify-between pt-4 pb-2 text-xs uppercase md:text-sm">
               <span>Menu</span>
               <span className="flex gap-5">
-                <SoundSwitch />
+                <RecruiterSwitch />
+                <SoundSwitch className="hidden sm:block" />
                 <ThemeSwitch />
               </span>
             </div>
