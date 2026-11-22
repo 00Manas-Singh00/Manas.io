@@ -12,6 +12,7 @@ import { startPrintHeads } from "../lib/print";
 import { play } from "../lib/sound";
 import { About } from "./about";
 import { Capabilities } from "./capabilities";
+import { CommandPalette } from "./command-palette";
 import { Contact } from "./contact";
 import { Hero } from "./hero";
 import { Loader } from "./loader";
@@ -142,6 +143,7 @@ export function Home() {
 
       <ShipIt />
       <RecruiterView />
+      <CommandPalette />
       <div aria-hidden className="grain" />
     </div>
   );

@@ -38,8 +38,14 @@ export function ShipIt() {
         setOpen(true);
       }
     };
+    // The command palette can trigger it too.
+    const onShip = () => setOpen(true);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("ship-it", onShip);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("ship-it", onShip);
+    };
   }, []);
 
   useEffect(() => {
