@@ -146,10 +146,11 @@ export function Projects() {
               <div className="proj-card overflow-hidden">
                 <motion.div
                   layoutId={`frame-${p.id}`}
+                  data-sheet
                   className="relative aspect-[4/5] overflow-hidden border border-ink bg-paper lg:aspect-auto lg:h-[clamp(220px,38vh,440px)]"
                 >
                   <div className="proj-img absolute inset-0">
-                    <ProjectVisual kind={p.visual} />
+                    <ProjectVisual kind={p.visual} peel />
                   </div>
                 </motion.div>
               </div>

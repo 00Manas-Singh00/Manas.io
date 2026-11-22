@@ -121,10 +121,13 @@ function segDist(
 export function ProjectVisual({
   kind,
   large = false,
+  peel = false,
   className,
 }: {
   kind: VisualKind;
   large?: boolean;
+  /** Let the sheet's corner lift on hover. Needs an ancestor marked `data-sheet`. */
+  peel?: boolean;
   className?: string;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -151,6 +154,10 @@ export function ProjectVisual({
       "(hover: hover) and (pointer: fine)",
     ).matches;
     const pointer = { x: -1, y: -1, on: 0 };
+    // The bordered frame that the peel clips, and the current fold size in px.
+    const frame = peel ? canvas.closest<HTMLElement>("[data-sheet]") : null;
+    let curl = 0;
+    let clipped = 0;
     let ink: [number, number, number] = [42, 77, 245];
     let paper: [number, number, number] = [251, 251, 248];
 
@@ -382,6 +389,62 @@ export function ProjectVisual({
         ctx.stroke();
         ctx.restore();
       }
+
+      // Peel: the sheet's bottom-right corner lifts along a 45° fold, more as the
+      // pointer nears it. The frame is clipped so the page shows through the corner,
+      // and the flap (the paper's back) is drawn folded over onto the plate.
+      if (frame) {
+        const m = Math.min(w, h);
+        let target = 0;
+        if (hovering && fine) {
+          const near = Math.hypot((1 - pointer.x) * w, (1 - pointer.y) * h);
+          const prox = clamp01(1 - near / (m * 0.75));
+          target = m * (0.09 + 0.17 * prox * prox);
+        }
+        curl += (target - curl) * Math.min(1, dt * 8);
+        const c = curl < 0.4 ? 0 : curl;
+
+        if (c !== clipped) {
+          clipped = c;
+          // +1 covers the frame's 1px border around the canvas.
+          frame.style.clipPath = c
+            ? `polygon(0 0, 100% 0, 100% calc(100% - ${c + 1}px), calc(100% - ${c + 1}px) 100%, 0 100%)`
+            : "";
+        }
+
+        if (c) {
+          const fold = { x: w - c / 2, y: h - c / 2 };
+          const tip = { x: w - c, y: h - c };
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(w - c, h);
+          ctx.lineTo(w, h - c);
+          ctx.lineTo(tip.x, tip.y);
+          ctx.closePath();
+          // Shadow the flap casts back onto the print.
+          ctx.shadowColor = "rgba(0, 0, 0, 0.28)";
+          ctx.shadowBlur = c * 0.35;
+          ctx.shadowOffsetX = -c * 0.05;
+          ctx.shadowOffsetY = -c * 0.05;
+          // The back of the sheet: plain paper, darker in the crease.
+          const g = ctx.createLinearGradient(fold.x, fold.y, tip.x, tip.y);
+          g.addColorStop(0, mix(paper, [0, 0, 0], 0.16));
+          g.addColorStop(0.45, mix(paper, [0, 0, 0], 0.03));
+          g.addColorStop(1, mix(paper, [255, 255, 255], 0.35));
+          ctx.fillStyle = g;
+          ctx.fill();
+          ctx.shadowColor = "transparent";
+          // The sheet's edge, so the flap reads as the same bordered print.
+          ctx.strokeStyle = mix(ink, paper, 0.25);
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(w - c, h);
+          ctx.lineTo(tip.x, tip.y);
+          ctx.lineTo(w, h - c);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
     };
 
     const loop = (now: number) => {
@@ -439,6 +502,7 @@ export function ProjectVisual({
     return () => {
       cancelAnimationFrame(raf);
       raf = 0;
+      if (frame) frame.style.clipPath = "";
       ro.disconnect();
       io.disconnect();
       mo.disconnect();
@@ -446,7 +510,7 @@ export function ProjectVisual({
       card.removeEventListener("pointermove", onMove);
       card.removeEventListener("pointerleave", onLeave);
     };
-  }, [kind, large]);
+  }, [kind, large, peel]);
 
   return (
     <canvas
