@@ -36,10 +36,13 @@ uniform float uDpr;
 uniform vec3 uBlobs[${BLOBS}]; // x, y (CSS px, y down), radius
 uniform vec3 uColor; uniform vec3 uCore;
 uniform float uOpacity; uniform float uTime; uniform float uAmp;
+uniform vec2 uLight;    // pointer, CSS px
+uniform float uDark;    // 0 light theme .. 1 dark theme
 
 void main(){
   vec2 p = vec2(gl_FragCoord.x, uRes.y * uDpr - gl_FragCoord.y) / uDpr;
   float field = 0.0;
+  vec2 grad = vec2(0.0); // d(field)/dp, for the wet-ink highlight
   for (int i = 0; i < ${BLOBS}; i++) {
     vec3 b = uBlobs[i];
     vec2 d = p - b.xy;
@@ -48,17 +51,47 @@ void main(){
     float wob = 1.0 + uAmp * 0.35 * (sin(a * 3.0 + uTime * 0.9 + float(i)) * 0.6
                                    + sin(a * 5.0 - uTime * 1.3) * 0.4);
     float r = b.z * wob;
-    field += (r * r) / max(dot(d, d), 1.0);
+    float dd = max(dot(d, d), 1.0);
+    field += (r * r) / dd;
+    grad += -2.0 * r * r * d / (dd * dd);
   }
   // Surface at field = 1, soft enough for the CSS blur to finish the edge.
   float ink = smoothstep(0.55, 1.15, field);
   vec3 col = mix(uColor, uCore, smoothstep(1.0, 3.0, field));
+
+  // Dark theme: the ink is wet and catches the lamp that follows the pointer. Treat
+  // the ink as a surface whose height rises with the field; its slope gives a normal,
+  // and a Blinn-Phong glint slides over the rim facing the light.
+  if (uDark > 0.001) {
+    float R = max(uBlobs[0].z, 1.0);
+    float hs = smoothstep(0.6, 2.6, field);
+    float dh = hs * (1.0 - hs) * 6.0 / 2.0; // d(height)/d(field), roughly
+    vec3 N = normalize(vec3(-grad * dh * R * 0.9, 1.0));
+    vec3 L = normalize(vec3(uLight - p, 240.0));
+    vec3 H = normalize(L + vec3(0.0, 0.0, 1.0));
+    // Only curved rims glint; a flat pool would mirror the lamp as a big white disc.
+    float slope = smoothstep(0.05, 0.3, length(N.xy));
+    float spec = pow(max(dot(N, H), 0.0), 14.0) * slope;
+    vec2 toLamp = uLight - p;
+    float lamp = exp(-dot(toLamp, toLamp) / (2.0 * 320.0 * 320.0));
+    col = mix(col, vec3(0.92, 0.94, 1.0), clamp(spec * 1.6 * lamp, 0.0, 0.85) * uDark);
+    col += uColor * 0.25 * lamp * uDark;
+  }
+
   gl_FragColor = vec4(col, ink * uOpacity);
 }`;
 
 type Drop = { x: number; y: number; vx: number; vy: number };
 
-function Ink({ ink, core }: { ink: string; core: string }) {
+function Ink({
+  ink,
+  core,
+  dark,
+}: {
+  ink: string;
+  core: string;
+  dark: boolean;
+}) {
   const material = useRef<THREE.ShaderMaterial>(null);
   const uniforms = useMemo(
     () => ({
@@ -72,6 +105,8 @@ function Ink({ ink, core }: { ink: string; core: string }) {
       uOpacity: { value: 0 },
       uTime: { value: 0 },
       uAmp: { value: orb.amp },
+      uLight: { value: new THREE.Vector2(-9999, -9999) },
+      uDark: { value: 0 },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -146,6 +181,12 @@ function Ink({ ink, core }: { ink: string; core: string }) {
     );
     u.uAmp.value += (orb.amp - u.uAmp.value) * k(2);
     u.uOpacity.value += (orb.opacity - u.uOpacity.value) * k(1.6);
+    // The lamp: pointer in CSS px (R3F pointer is -1..1, y up), faded in with the theme.
+    u.uLight.value.set(
+      ((state.pointer.x + 1) / 2) * w,
+      ((1 - state.pointer.y) / 2) * h,
+    );
+    u.uDark.value += ((dark ? 1 : 0) - u.uDark.value) * k(3);
 
     // Publish the main body for the ink-through-type effect.
     orbScreen.cx = b.x;
@@ -175,25 +216,59 @@ export default function OrbCanvas() {
   const dark = resolvedTheme === "dark";
 
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none fixed inset-0 z-0"
-      // Lighter than the old orb's blur, so the liquid edge and droplets still read.
-      style={{ filter: "blur(clamp(6px, 0.9vw, 14px))" }}
-    >
-      <Canvas
-        dpr={[1, 1.5]}
-        gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
-        eventSource={
-          typeof document !== "undefined" ? document.body : undefined
-        }
-        eventPrefix="client"
+    <>
+      <Lamp on={dark} />
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-0"
+        // Lighter than the old orb's blur, so the liquid edge and droplets still read.
+        style={{ filter: "blur(clamp(6px, 0.9vw, 14px))" }}
       >
-        <Ink
-          ink={dark ? "#4a5ef0" : "#1d3bd1"}
-          core={dark ? "#1c2fc9" : "#1530c4"}
-        />
-      </Canvas>
-    </div>
+        <Canvas
+          dpr={[1, 1.5]}
+          gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
+          eventSource={
+            typeof document !== "undefined" ? document.body : undefined
+          }
+          eventPrefix="client"
+        >
+          <Ink
+            ink={dark ? "#4a5ef0" : "#1d3bd1"}
+            core={dark ? "#1c2fc9" : "#1530c4"}
+            dark={dark}
+          />
+        </Canvas>
+      </div>
+    </>
+  );
+}
+
+/**
+ * Dark theme only: a soft pool of light that follows the pointer across the page, like
+ * a desk lamp over a dark sheet. The ink catches the same lamp in the shader above.
+ */
+function Lamp({ on }: { on: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onMove = (e: PointerEvent) => {
+      el.style.setProperty("--lx", `${e.clientX}px`);
+      el.style.setProperty("--ly", `${e.clientY}px`);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, []);
+  return (
+    <div
+      ref={ref}
+      aria-hidden
+      className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-700"
+      style={{
+        opacity: on ? 1 : 0,
+        background:
+          "radial-gradient(circle 420px at var(--lx, 50%) var(--ly, 40%), rgba(255, 255, 255, 0.07), transparent 70%)",
+      }}
+    />
   );
 }
