@@ -442,6 +442,32 @@
 }
 
 /*
+  Riso mode (components/riso.tsx, Konami code): a two-ink risograph print. Riso blue
+  on off-white stock, a fluorescent pink plate slightly out of register under the big
+  type, heavier grain, and the portrait overprinted in both inks. Beats dark mode.
+*/
+html.riso,
+html.riso.dark {
+  --paper: #f1ece0;
+  --ink: #0078bf;
+  --orb: #ff48b0;
+  --orb-core: #ff2a9d;
+}
+html.riso [data-ink] {
+  filter: drop-shadow(2.6px -1.6px 0 color-mix(in oklab, #ff48b0 78%, transparent));
+}
+html.riso .grain {
+  opacity: 0.11;
+}
+html.riso .hero-portrait-inner {
+  background: #ff48b0;
+}
+html.riso .hero-portrait-inner img {
+  mix-blend-mode: multiply;
+  filter: grayscale(1) contrast(1.35) brightness(1.08);
+}
+
+/*
   Misregistration (lib/misreg.ts): while scrolling fast, big type gains an offset
   second ink. Only active while html.is-misreg is set, so idle pages pay nothing.
 */

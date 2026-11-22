@@ -28,6 +28,7 @@ import { PrintResume } from "./print-resume";
 import { Projects } from "./projects";
 import { Recognition } from "./recognition";
 import { RecruiterView } from "./recruiter";
+import { RisoMode } from "./riso";
 import { ShipIt } from "./ship-it";
 import { CompactBar, MenuOverlay } from "./site-nav";
 import { SmoothScroll } from "./smooth-scroll";
@@ -166,6 +167,7 @@ export function Home({
       <PrintHead />
       <Poster />
       <PrintResume />
+      <RisoMode />
       <div aria-hidden className="grain" />
     </div>
   );
