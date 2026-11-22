@@ -6,17 +6,23 @@ import { useCallback, useEffect, useState } from "react";
 import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
+import type { LatestCommit } from "../lib/github";
 import { gsap, ScrollTrigger, useGSAP } from "../lib/gsap";
 import { startInkField } from "../lib/ink";
 import { startPrintHeads } from "../lib/print";
 import { play } from "../lib/sound";
+import { markSeen, setSections } from "../lib/visit";
 import { About } from "./about";
 import { Capabilities } from "./capabilities";
+import { CommandPalette } from "./command-palette";
 import { Contact } from "./contact";
+import { GithubStrip } from "./github-strip";
 import { Hero } from "./hero";
 import { Loader } from "./loader";
+import { Poster } from "./poster";
 import { Press } from "./press";
 import { Principles } from "./principles";
+import { PrintHead } from "./print-head";
 import { Projects } from "./projects";
 import { Recognition } from "./recognition";
 import { RecruiterView } from "./recruiter";
@@ -48,7 +54,11 @@ function prefersLiteOrb() {
   }
 }
 
-export function Home() {
+export function Home({
+  latestCommit = null,
+}: {
+  latestCommit?: LatestCommit | null;
+}) {
   const [barVisible, setBarVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [label, setLabel] = useState("Index");
@@ -81,6 +91,7 @@ export function Home() {
     // five sections rolls once to where you land instead of five times.
     let pending: number | undefined;
     const sections = gsap.utils.toArray<HTMLElement>("[data-label]");
+    setSections(sections.map((s) => s.dataset.label!));
     const showLabel = (next: string, i: number) => {
       window.clearTimeout(pending);
       pending = window.setTimeout(() => {
@@ -94,7 +105,11 @@ export function Home() {
         trigger: el,
         start: "top 50%",
         end: "bottom 50%",
-        onToggle: (self) => self.isActive && showLabel(el.dataset.label!, i),
+        onToggle: (self) => {
+          if (!self.isActive) return;
+          markSeen(el.dataset.label!);
+          showLabel(el.dataset.label!, i);
+        },
       });
     });
 
@@ -131,6 +146,7 @@ export function Home() {
 
       <main>
         <Hero onPassed={setBarVisible} />
+        <GithubStrip commit={latestCommit} />
         <Principles />
         <About />
         <Work />
@@ -142,6 +158,9 @@ export function Home() {
 
       <ShipIt />
       <RecruiterView />
+      <CommandPalette />
+      <PrintHead />
+      <Poster />
       <div aria-hidden className="grain" />
     </div>
   );

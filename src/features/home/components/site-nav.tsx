@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { NAV_ITEMS, PROFILE, SOCIALS } from "../data";
 import { scroller, scrollToId } from "../lib/lenis";
 import { isSoundOn, onSoundChange, setSound } from "../lib/sound";
+import { PaletteButton } from "./command-palette";
 import { RecruiterSwitch } from "./recruiter";
 import { RollText } from "./roll-text";
 
@@ -104,6 +105,7 @@ export function CompactBar({
         </div>
 
         <div className="flex items-center justify-end gap-5">
+          <PaletteButton className="hidden lg:block" />
           <RecruiterSwitch className="hidden sm:block" />
           <SoundSwitch className="hidden md:block" />
           <ThemeSwitch className="hidden sm:block" />
