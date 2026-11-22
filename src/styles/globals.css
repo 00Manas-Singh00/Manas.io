@@ -468,19 +468,6 @@ html.riso .hero-portrait-inner img {
 }
 
 /*
-  Misregistration (lib/misreg.ts): while scrolling fast, big type gains an offset
-  second ink. Only active while html.is-misreg is set, so idle pages pay nothing.
-*/
-.is-misreg [data-ink] {
-  filter: drop-shadow(
-    calc(var(--mis, 0) * 1px)
-      calc(var(--mis, 0) * -0.55px)
-      0
-      color-mix(in oklab, #ff3fa4 62%, transparent)
-  );
-}
-
-/*
   Printed headings (lib/print.ts): an ink outline that fills left to right as --print
   goes 0 -> 1. Reduced motion sets --print-all on the heading and skips straight to ink.
 */
