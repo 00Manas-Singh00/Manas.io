@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { NAV_ITEMS, PROFILE, PROJECTS, SOCIALS } from "../data";
 import { inkNavigate } from "../lib/ink-bleed";
 import { decodeEmail, scroller, scrollToId } from "../lib/lenis";
+import { markThemeChosen } from "../lib/paper";
 import { setRecruiter } from "../lib/recruiter";
 import { isSoundOn, setSound } from "../lib/sound";
 import { openPoster } from "./poster";
@@ -140,7 +141,10 @@ export function CommandPalette() {
         id: "theme",
         group: "Actions",
         label: `Switch to ${resolvedTheme === "dark" ? "light" : "dark"} theme`,
-        run: () => setTheme(resolvedTheme === "dark" ? "light" : "dark"),
+        run: () => {
+          markThemeChosen();
+          setTheme(resolvedTheme === "dark" ? "light" : "dark");
+        },
       },
       {
         id: "sound",

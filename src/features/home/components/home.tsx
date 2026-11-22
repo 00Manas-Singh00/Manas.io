@@ -20,6 +20,7 @@ import { GithubStrip } from "./github-strip";
 import { Hero } from "./hero";
 import { LastPage } from "./last-page";
 import { Loader } from "./loader";
+import { PaperClock } from "./paper-clock";
 import { Poster } from "./poster";
 import { Press } from "./press";
 import { Principles } from "./principles";
@@ -169,6 +170,7 @@ export function Home({
       <RisoMode />
       <ProofMode />
       <LastPage />
+      <PaperClock />
       <div aria-hidden className="grain" />
     </div>
   );
