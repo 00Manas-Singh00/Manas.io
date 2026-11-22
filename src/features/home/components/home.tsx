@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { fontDisplay } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
+import type { LatestCommit } from "../lib/github";
 import { gsap, ScrollTrigger, useGSAP } from "../lib/gsap";
 import { startInkField } from "../lib/ink";
 import { startPrintHeads } from "../lib/print";
@@ -14,6 +15,7 @@ import { About } from "./about";
 import { Capabilities } from "./capabilities";
 import { CommandPalette } from "./command-palette";
 import { Contact } from "./contact";
+import { GithubStrip } from "./github-strip";
 import { Hero } from "./hero";
 import { Loader } from "./loader";
 import { Press } from "./press";
@@ -49,7 +51,11 @@ function prefersLiteOrb() {
   }
 }
 
-export function Home() {
+export function Home({
+  latestCommit = null,
+}: {
+  latestCommit?: LatestCommit | null;
+}) {
   const [barVisible, setBarVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [label, setLabel] = useState("Index");
@@ -132,6 +138,7 @@ export function Home() {
 
       <main>
         <Hero onPassed={setBarVisible} />
+        <GithubStrip commit={latestCommit} />
         <Principles />
         <About />
         <Work />

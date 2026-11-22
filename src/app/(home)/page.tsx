@@ -4,9 +4,14 @@ import type { ProfilePage as PageSchema, WithContext } from "schema-dts";
 import { SITE_INFO } from "@/config/site";
 import { Home } from "@/features/home/components/home";
 import { PROFILE, SOCIALS } from "@/features/home/data";
+import { getLatestCommit } from "@/features/home/lib/github";
 import { USER } from "@/features/profile/data/user";
 
-export default function Page() {
+// The live GitHub strip refreshes at most hourly.
+export const revalidate = 3600;
+
+export default async function Page() {
+  const latestCommit = await getLatestCommit();
   return (
     <>
       <script
@@ -15,7 +20,7 @@ export default function Page() {
           __html: JSON.stringify(getPageJsonLd()).replace(/</g, "\\u003c"),
         }}
       />
-      <Home />
+      <Home latestCommit={latestCommit} />
     </>
   );
 }
