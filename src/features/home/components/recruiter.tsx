@@ -114,9 +114,8 @@ export function RecruiterView() {
                   {PROFILE.role}, {PROFILE.company}
                 </p>
                 <p className="mt-3 max-w-[44ch] text-base leading-relaxed text-ink-soft">
-                  Full-stack, forward-deployed engineer. I sit with the people
-                  who have the problem, then ship the software that fixes it,
-                  end to end.
+                  Full-stack, forward-deployed engineer. I sit with the problem,
+                  then ship the fix.
                 </p>
 
                 <div className="mt-8 flex flex-wrap gap-3">

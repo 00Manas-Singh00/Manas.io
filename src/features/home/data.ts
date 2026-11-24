@@ -25,30 +25,24 @@ export const SOCIALS = [
 ];
 
 export const SUMMARY =
-  "Hi, I'm Manas. I love the moment a tangled, real-world problem turns into software people actually use. Most days I'm the engineer on the client call in the morning and deep in the codebase by night: I listen, sketch, demo, then build the whole thing, from the interface you touch to the APIs, data and cloud underneath. And when nobody's looking, I'm making a physics puzzle game. Same job, better excuses.";
+  "I'm Manas. I turn messy, real-world problems into software people use, from the client call to the cloud. Off hours, I'm building a physics puzzle game.";
 
 export const EDUCATION =
-  "B.Tech, Computer Science. Jaypee University of Engineering and Technology, 2022-2026.";
+  "B.Tech, Computer Science · Jaypee University, 2022–2026";
 
 /** How I work: three short rules, each set large with a two-line aside. */
 export const PRINCIPLES = [
   {
     title: "Talk to people first",
-    caption: [
-      "The best spec is a conversation.",
-      "I sit in on the call, the demo, the review.",
-    ],
+    caption: ["The best spec", "is a conversation."],
   },
   {
     title: "Ship small, ship often",
-    caption: ["A rough version on Tuesday", "beats a perfect one next month."],
+    caption: ["Rough on Tuesday", "beats perfect next month."],
   },
   {
     title: "Own it after launch",
-    caption: [
-      "Alerts, dashboards, the late-night fix.",
-      "Shipped means it keeps working.",
-    ],
+    caption: ["Shipped means", "it keeps working."],
   },
 ];
 
@@ -74,26 +68,26 @@ export const WORK: Role[] = [
     period: "Jun 2026 - Present",
     place: "India",
     intro:
-      "Primary engineer on a two-person team. I run discovery calls, demos, onboarding and security questionnaires with client teams several times a week.",
+      "Primary engineer on a two-person team, and the one on the client calls.",
     chapters: [
       {
         title: "AI document pipeline",
-        stack: "TypeScript, NestJS, React, MongoDB, Redis, BullMQ, Gemini API",
+        stack: "TypeScript, NestJS, MongoDB, BullMQ, Gemini",
         points: [
-          "Built a 4-stage async pipeline (OCR, LLM extraction, validation, posting to the client's ERP) that cut handling time per document from about 3 minutes to about 10 seconds.",
-          "Multi-tenant from day one: about 1,000 documents a month across 3+ enterprise clients on one deployment.",
-          "99% field-level accuracy against a labeled test set, with confidence thresholds that route uncertain fields to a human instead of guessing.",
-          "Role- and policy-based access control (6 roles, 10 permissions), a four-eyes impersonation flow for auditors and 12 admin views.",
+          "Document handling cut from ~3 min to ~10 s.",
+          "~1,000 documents a month for 3+ enterprise clients.",
+          "99% field accuracy; unsure fields go to a human.",
+          "Role-based access with audited impersonation.",
         ],
       },
       {
         title: "Anomaly detection platform",
-        stack: "Python, FastAPI, PostgreSQL, Redis, React",
+        stack: "Python, FastAPI, PostgreSQL, React",
         points: [
-          "Detection engine that catches duplicate invoices, suspicious bank-detail changes and risky payments before money moves.",
-          "Designed an outbound-only relay inside each client's AWS account, so it reads their ERP over OData without a single inbound firewall change.",
-          "Tenant isolation with PostgreSQL Row-Level Security, per-tenant HashiCorp Vault keys, OIDC single sign-on and audit logging.",
-          "Run in production with Prometheus and Grafana alerting, tested restores and dashboards load-tested at 1M+ findings.",
+          "Flags duplicate invoices and risky payments before money moves.",
+          "Reads client ERPs with zero inbound firewall changes.",
+          "Row-level tenant isolation, Vault keys, SSO.",
+          "Alerting in production; load-tested at 1M+ findings.",
         ],
       },
     ],
@@ -105,12 +99,12 @@ export const WORK: Role[] = [
     place: "Remote",
     chapters: [
       {
-        title: "Three internal web applications",
-        stack: "TypeScript, Next.js, Django, AWS, GitHub Actions",
+        title: "Three internal web apps",
+        stack: "Next.js, Django, AWS, GitHub Actions",
         points: [
-          "Shipped features from design handoff to AWS deployment on a two-person team.",
-          "Cut API response time by 35% through request batching, and added JWT auth with refresh-token rotation for 3,000+ users.",
-          "Set up GitHub Actions CI/CD so production fixes deploy the same day.",
+          "Shipped from design handoff to AWS.",
+          "35% faster APIs; JWT auth for 3,000+ users.",
+          "CI/CD for same-day production fixes.",
         ],
       },
     ],
@@ -134,41 +128,40 @@ export const PROJECTS: Project[] = [
   {
     id: "the-margin",
     title: "The Margin",
-    caption: "A physics puzzle game that saves offline and syncs later",
+    caption: "A physics puzzle game with offline saves",
     year: "2026",
     status: "Pre-launch, solo",
-    stack:
-      "TypeScript, Next.js, NestJS, Godot (WebAssembly), Prisma, PostgreSQL, Zod, Playwright",
+    stack: "TypeScript, Next.js, NestJS, Godot, PostgreSQL",
     points: [
-      "A Godot game compiled to WebAssembly, a Next.js site with accounts and a NestJS API in one TypeScript monorepo, with 16 handcrafted levels.",
-      "Offline-first cloud saves: one versioned schema shared through Zod contracts, revision-based conflict detection and a reload-safe outbox.",
-      "Security review before launch (Argon2id, hashed session tokens, CSRF, strict CSP), with 105 level tests and Playwright runs across three engines.",
+      "Godot game, site and API in one TypeScript monorepo.",
+      "Offline-first cloud saves with conflict detection.",
+      "16 levels, 105 level tests, security-reviewed.",
     ],
     visual: "margin",
   },
   {
     id: "curiosity-engine",
     title: "Curiosity Engine",
-    caption: "A knowledge graph you can wander through",
+    caption: "A knowledge graph to wander through",
     year: "2025",
     status: "Side project",
-    stack: "Next.js, Node.js, FastAPI, PostgreSQL, Redis, D3.js, Gemini API",
+    stack: "Next.js, FastAPI, PostgreSQL, Redis, D3.js",
     points: [
-      "An interactive D3.js explorer over 10,000+ graph relationships.",
-      "Sub-200 ms responses through Redis caching, with Gemini-powered topic expansion.",
+      "D3.js explorer over 10,000+ relationships.",
+      "Sub-200 ms responses; Gemini grows the graph.",
     ],
     visual: "graph",
   },
   {
     id: "tradetide",
     title: "TradeTide",
-    caption: "Trade what you know for what you want to learn",
+    caption: "Trade skills, not money",
     year: "2025",
     status: "Open source",
-    stack: "React, TypeScript, Redux Toolkit, Socket.io, Tailwind CSS",
+    stack: "React, TypeScript, Redux Toolkit, Socket.io",
     points: [
-      "Skill-bartering marketplace with requests, real-time chat and session scheduling.",
-      "Reviews and ratings after each session, behind secure authentication.",
+      "Skill-swap marketplace with real-time chat.",
+      "Scheduling, then reviews after every session.",
     ],
     href: "https://github.com/00Manas-Singh00/TradeTide",
     visual: "tide",
@@ -176,14 +169,13 @@ export const PROJECTS: Project[] = [
   {
     id: "meet-genius",
     title: "Meet Genius",
-    caption: "Measures how closely a meeting stuck to its agenda",
+    caption: "Scores a meeting against its agenda",
     year: "2025",
     status: "Hackathon build",
-    stack:
-      "Python, Flask, OpenAI Whisper, Sentence Transformers, scikit-learn, Chart.js",
+    stack: "Python, Flask, Whisper, Sentence Transformers",
     points: [
-      "Takes video, audio or text, transcribes with Whisper and scores each discussion against the agenda topics.",
-      "Visual similarity analytics and downloadable reports.",
+      "Transcribes with Whisper, scores talk against the agenda.",
+      "Charts and downloadable reports.",
     ],
     href: "https://github.com/00Manas-Singh00/ProductivityAnalyzer",
     visual: "voice",
@@ -204,48 +196,33 @@ export const CAPABILITY_WORDS = [
 ];
 
 export const SKILL_GROUPS = [
-  { title: "Languages", items: "TypeScript, JavaScript, Python, SQL" },
-  { title: "Frontend", items: "React, Next.js, D3.js, data-heavy dashboards" },
-  {
-    title: "Backend",
-    items: "Node.js, NestJS, FastAPI, OData, Prisma, Zod, BullMQ, Dramatiq",
-  },
-  {
-    title: "Data and cloud",
-    items:
-      "PostgreSQL, MongoDB, Redis, AWS, Docker, GitHub Actions, Prometheus, Grafana",
-  },
-  {
-    title: "Security",
-    items:
-      "Multi-tenant isolation, RBAC, OIDC, JWT, HashiCorp Vault, audit logging",
-  },
-  {
-    title: "AI and integrations",
-    items:
-      "Gemini API, Whisper, OCR, LLM extraction and evaluation, REST, OData, SAP",
-  },
+  { title: "Languages", items: "TypeScript, Python, SQL" },
+  { title: "Frontend", items: "React, Next.js, D3.js" },
+  { title: "Backend", items: "Node.js, NestJS, FastAPI, Prisma, BullMQ" },
+  { title: "Data and cloud", items: "PostgreSQL, MongoDB, Redis, AWS, Docker" },
+  { title: "Security", items: "RBAC, OIDC, JWT, Vault, tenant isolation" },
+  { title: "AI and integrations", items: "Gemini, Whisper, OCR, OData, SAP" },
 ];
 
 export const RECOGNITION = [
   {
     title: "Winner, HackOverflow 7.0",
-    detail: "NIT Durgapur, national hackathon, 200+ teams",
+    detail: "NIT Durgapur · 200+ teams",
     year: "2024",
   },
   {
     title: "Winner, Live the Code 3.0",
-    detail: "National hackathon, 200+ teams",
+    detail: "National · 200+ teams",
     year: "2024",
   },
   {
     title: "7+ articles on GeeksforGeeks",
-    detail: "Frontend and JavaScript tutorials, 11,000+ views",
+    detail: "11,000+ views",
     year: "2023",
   },
   {
     title: "Mentored 20+ students",
-    detail: "Through the college GDSC chapter",
+    detail: "College GDSC chapter",
     year: "2024",
   },
 ];
@@ -257,17 +234,11 @@ export const RECOGNITION = [
 export const HIGHLIGHTS = [
   {
     value: "3 min → 10 s",
-    label: "Per document, after the AI pipeline I built went to production",
+    label: "Per document, with my AI pipeline",
   },
-  {
-    value: "99%",
-    label: "Field-level extraction accuracy on a labeled test set",
-  },
-  {
-    value: "1,000 / mo",
-    label: "Documents processed across 3+ enterprise clients",
-  },
-  { value: "2×", label: "National hackathon winner, 200+ teams each" },
+  { value: "99%", label: "Field extraction accuracy" },
+  { value: "1,000 / mo", label: "Documents for 3+ enterprise clients" },
+  { value: "2×", label: "National hackathon winner" },
 ];
 
 /**
