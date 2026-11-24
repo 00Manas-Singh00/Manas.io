@@ -241,7 +241,8 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
           </div>
 
           <div className="mt-6 md:mt-0">
-            <div className="hero-fade flex justify-between pt-4 pb-2 text-xs uppercase md:text-sm">
+            {/* Above the menu list, so the theme link's pull cord can hang over it. */}
+            <div className="hero-fade relative z-10 flex justify-between pt-4 pb-2 text-xs uppercase md:text-sm">
               <span>Menu</span>
               <span className="flex gap-5">
                 <RecruiterSwitch />
