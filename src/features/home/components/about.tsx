@@ -53,13 +53,13 @@ export function About() {
       ref={root}
       id="about"
       data-label="About"
-      className="relative z-10 scroll-mt-20 px-4 py-24 md:px-6 md:py-40"
+      className="relative z-10 scroll-mt-20 px-4 py-20 md:px-6 md:py-28"
     >
       <div className="mx-auto max-w-[1440px] md:grid md:grid-cols-12 md:gap-6">
         <p
           data-ink
           data-proof="About · each word inks from 14% to full as you read"
-          className="about-copy text-[clamp(1.75rem,3.6vw,3.25rem)] leading-[1.12] font-light md:col-span-10 md:col-start-2"
+          className="about-copy text-[clamp(2rem,4.6vw,4.5rem)] leading-[1.06] font-light text-balance md:col-span-10 md:col-start-2"
         >
           {SUMMARY}
         </p>

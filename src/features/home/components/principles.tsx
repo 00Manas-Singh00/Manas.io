@@ -119,37 +119,32 @@ export function Principles() {
       ref={root}
       data-proof="Rules · letters drop with a bounce, then lean away from the cursor"
       data-label="How I work"
-      className="relative z-10 px-4 py-24 md:px-6 md:py-40"
+      className="relative z-10 px-4 py-20 md:px-6 md:py-28"
     >
-      <div className="mx-auto max-w-[1440px] space-y-16 md:space-y-28">
+      <div className="mx-auto max-w-[1440px] space-y-14 md:space-y-20">
         {PRINCIPLES.map((p, i) => (
           <div
             key={p.title}
             className={cn(
-              "pr-item relative md:w-[72%]",
+              "pr-item relative md:w-[64%]",
               i === 1 && "md:ml-auto",
-              i === 2 && "md:ml-[14%]",
+              i === 2 && "md:ml-[18%]",
             )}
           >
-            <span className="pr-rule mb-4 block h-px origin-left bg-ink" />
-            <div className="mb-3 overflow-hidden text-xs uppercase md:text-sm">
+            <span className="pr-rule mb-3 block h-px origin-left bg-ink" />
+            {/* Index and aside share one line on the rule, like a running head. */}
+            <div className="mb-4 flex items-baseline justify-between gap-6 overflow-hidden text-xs uppercase md:text-sm">
               <span className="pr-index block">/0{i + 1}</span>
+              <span className="pr-cap block text-right">
+                {p.caption.join(" ")}
+              </span>
             </div>
-            <div className="flex flex-col gap-y-4 md:flex-row md:items-end md:gap-x-8">
-              <h3
-                data-ink
-                className="pr-title text-[clamp(2.75rem,6.4vw,6.5rem)] leading-[0.9] font-light text-balance uppercase md:flex-1"
-              >
-                {p.title}
-              </h3>
-              <div className="shrink-0 pb-1 text-xs uppercase md:text-sm">
-                {p.caption.map((line) => (
-                  <span key={line} className="block overflow-hidden">
-                    <span className="pr-cap block">{line}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
+            <h3
+              data-ink
+              className="pr-title text-[clamp(2.75rem,6.4vw,6.5rem)] leading-[0.9] font-light text-balance uppercase"
+            >
+              {p.title}
+            </h3>
           </div>
         ))}
       </div>
