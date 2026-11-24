@@ -176,8 +176,7 @@ export function Contact() {
           Let&apos;s make something unreasonable.
         </h2>
         <p className="mt-6 max-w-[46ch] text-lg leading-relaxed md:text-xl">
-          Send the half-baked idea, the cursed bug, or the thing your team swore
-          was impossible. I reply faster than your CI pipeline.
+          Send the idea, the bug, or the impossible thing. I reply fast.
         </p>
         <div className="mt-10 flex flex-wrap items-center gap-3">
           <MagneticPill />
