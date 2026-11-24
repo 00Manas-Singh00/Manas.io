@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
+import { markFound } from "../lib/eggs";
 import { play } from "../lib/sound";
 
 const CODE = [
@@ -57,7 +58,8 @@ export function RisoMode() {
       i = key === CODE[i] ? i + 1 : key === CODE[0] ? 1 : 0;
       if (i === CODE.length) {
         i = 0;
-        document.documentElement.classList.toggle("riso");
+        if (document.documentElement.classList.toggle("riso"))
+          markFound("riso");
         play("turn");
       }
     };

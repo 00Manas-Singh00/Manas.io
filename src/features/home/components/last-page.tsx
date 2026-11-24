@@ -5,8 +5,10 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 import { PROFILE, SOCIALS } from "../data";
+import { markFound } from "../lib/eggs";
 import { decodeEmail, scroller } from "../lib/lenis";
 import { play } from "../lib/sound";
+import { EggTally } from "./egg-hint";
 import { RollText } from "./roll-text";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -102,6 +104,7 @@ export function LastPage() {
   useEffect(() => {
     if (!open) return;
     play("turn");
+    markFound("page");
     scroller.lenis?.stop();
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
@@ -292,7 +295,7 @@ export function LastPage() {
               </div>
 
               <p className="border-t border-ink pt-2 text-xs uppercase">
-                Psst: the Konami code still works on this side too.
+                <EggTally />
               </p>
             </motion.div>
           </motion.div>

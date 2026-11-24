@@ -16,6 +16,7 @@ import { About } from "./about";
 import { Capabilities } from "./capabilities";
 import { CommandPalette } from "./command-palette";
 import { Contact } from "./contact";
+import { EggSlip } from "./egg-hint";
 import { GithubStrip } from "./github-strip";
 import { Hero } from "./hero";
 import { LastPage } from "./last-page";
@@ -175,6 +176,7 @@ export function Home({
       <ProofMode />
       <LastPage />
       <PaperClock />
+      <EggSlip />
       <div aria-hidden className="grain" />
     </div>
   );
