@@ -246,7 +246,7 @@ export function Hero({ onPassed }: { onPassed: (passed: boolean) => void }) {
               <span className="flex gap-5">
                 <RecruiterSwitch />
                 <SoundSwitch className="hidden sm:block" />
-                <ThemeSwitch />
+                <ThemeSwitch cord />
               </span>
             </div>
             <ul>

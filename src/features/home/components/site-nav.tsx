@@ -2,16 +2,15 @@
 
 import { ArrowUpRight, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
 import { NAV_ITEMS, PROFILE, SOCIALS } from "../data";
 import { scroller, scrollToId } from "../lib/lenis";
-import { markThemeChosen } from "../lib/paper";
 import { isSoundOn, onSoundChange, setSound } from "../lib/sound";
 import { PaletteButton } from "./command-palette";
+import { Cord, useLightSwitch } from "./pull-cord";
 import { RecruiterSwitch } from "./recruiter";
 import { RollText } from "./roll-text";
 
@@ -36,26 +35,29 @@ export function SoundSwitch({ className }: { className?: string }) {
   );
 }
 
-export function ThemeSwitch({ className }: { className?: string }) {
-  const { resolvedTheme, setTheme } = useTheme();
+/** The theme link; with `cord`, a pull cord hangs under it on desktop. */
+export function ThemeSwitch({
+  className,
+  cord = false,
+}: {
+  className?: string;
+  cord?: boolean;
+}) {
   // The theme is only known on the client; render a neutral label until mounted.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const next = resolvedTheme === "dark" ? "light" : "dark";
+  const { mounted, dark, toggle } = useLightSwitch();
+  const next = dark ? "light" : "dark";
   return (
-    <button
-      type="button"
-      onClick={() => {
-        markThemeChosen();
-        setTheme(next);
-      }}
-      className={cn("group cursor-pointer text-sm uppercase", className)}
-      aria-label={mounted ? `Switch to ${next} theme` : "Toggle theme"}
-    >
-      <RollText
-        text={!mounted ? "Theme" : resolvedTheme === "dark" ? "Light" : "Dark"}
-      />
-    </button>
+    <span className={cn("relative", className)}>
+      <button
+        type="button"
+        onClick={(e) => toggle(e.currentTarget)}
+        className="group cursor-pointer text-sm uppercase"
+        aria-label={mounted ? `Switch to ${next} theme` : "Toggle theme"}
+      >
+        <RollText text={!mounted ? "Theme" : dark ? "Light" : "Dark"} />
+      </button>
+      {cord && mounted && <Cord onPull={toggle} className="hidden md:flex" />}
+    </span>
   );
 }
 
@@ -112,7 +114,7 @@ export function CompactBar({
           <PaletteButton className="hidden lg:block" />
           <RecruiterSwitch className="hidden sm:block" />
           <SoundSwitch className="hidden md:block" />
-          <ThemeSwitch className="hidden sm:block" />
+          <ThemeSwitch cord className="hidden sm:block" />
           <button
             type="button"
             onClick={onMenu}

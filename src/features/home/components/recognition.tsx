@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { RECOGNITION } from "../data";
 import { ScrollTrigger, useGSAP } from "../lib/gsap";
 import { moveOrb } from "../lib/orb";
+import { Figures } from "./figures";
 import { setFillDirection } from "./roll-text";
 
 /** Full-width rows; ink floods in from whichever edge the pointer entered. */
@@ -59,9 +60,11 @@ export function Recognition() {
               <span className="ink-fill" />
               <div className="relative grid gap-1 px-1 py-5 transition-colors duration-500 group-hover:text-paper md:grid-cols-12 md:items-baseline md:gap-6 md:py-6">
                 <p className="text-[clamp(1.5rem,3vw,2.6rem)] leading-tight font-light uppercase md:col-span-6">
-                  {r.title}
+                  <Figures text={r.title} />
                 </p>
-                <p className="text-sm uppercase md:col-span-5">{r.detail}</p>
+                <p className="text-sm uppercase md:col-span-5">
+                  <Figures text={r.detail} />
+                </p>
                 <p className="text-sm md:col-span-1 md:text-right">{r.year}</p>
               </div>
             </motion.li>
