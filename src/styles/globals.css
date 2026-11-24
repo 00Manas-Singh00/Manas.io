@@ -518,8 +518,27 @@ html.riso .hero-portrait-inner img {
   from { transform: translateY(100%); opacity: 0; }
   to { transform: none; opacity: 1; }
 }
+/* The hint slip tucking into the corner, and leaving (egg-hint.tsx). */
+.egg-slip-in {
+  rotate: -1.5deg;
+  animation: egg-slip-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.egg-slip-out {
+  rotate: -1.5deg;
+  animation: egg-slip-out 0.45s cubic-bezier(0.7, 0, 0.84, 0) both;
+}
+@keyframes egg-slip-in {
+  from { transform: translateY(140%) rotate(-6deg); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes egg-slip-out {
+  to { transform: translateY(140%) rotate(4deg); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .egg-hint-in { animation: none; }
+  .egg-slip-in { animation-duration: 0.01s; }
+  .egg-slip-out { animation-duration: 0.01s; }
 }
 
 /* A fresh coupon printing in from its stub (tear-coupon.tsx). */
