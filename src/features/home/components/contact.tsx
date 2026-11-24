@@ -17,6 +17,7 @@ import { moveOrb } from "../lib/orb";
 import { Guestbook } from "./guestbook";
 import { PosterButton } from "./poster";
 import { RollText } from "./roll-text";
+import { TearCoupon } from "./tear-coupon";
 
 /** Magnetic pill: leans toward the pointer with a spring, settles back on leave. */
 function MagneticPill() {
@@ -182,6 +183,8 @@ export function Contact() {
           <MagneticPill />
           <CopyEmail />
         </div>
+
+        <TearCoupon />
 
         <Guestbook />
 

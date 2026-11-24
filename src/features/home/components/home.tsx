@@ -20,6 +20,7 @@ import { GithubStrip } from "./github-strip";
 import { Hero } from "./hero";
 import { LastPage } from "./last-page";
 import { Loader } from "./loader";
+import { Ornament } from "./ornament";
 import { PaperClock } from "./paper-clock";
 import { Poster } from "./poster";
 import { Press } from "./press";
@@ -153,10 +154,13 @@ export function Home({
         <Hero onPassed={setBarVisible} />
         <GithubStrip commit={latestCommit} />
         <Principles />
+        <Ornament kind="flower" />
         <About />
         <Work />
+        <Ornament kind="lozenge" />
         <Projects />
         <Capabilities />
+        <Ornament kind="asterism" />
         <Recognition />
       </main>
       <Contact />

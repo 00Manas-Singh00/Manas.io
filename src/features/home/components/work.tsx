@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { WORK } from "../data";
 import { ScrollTrigger, useGSAP } from "../lib/gsap";
 import { moveOrb } from "../lib/orb";
+import { Figures } from "./figures";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -124,7 +125,7 @@ export function Work() {
                           {...rise(0.1 + (i % 2) * 0.1)}
                           className="text-base leading-relaxed md:text-lg"
                         >
-                          {pt}
+                          <Figures text={pt} />
                         </motion.p>
                       </li>
                     ))}

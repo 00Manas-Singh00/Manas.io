@@ -483,6 +483,46 @@ html.riso .hero-portrait-inner img {
   -webkit-text-stroke: 1px var(--ink);
 }
 
+/* Selecting text: an ink highlight, with the pink plate printed a hair out of register. */
+.home ::selection {
+  background: color-mix(in oklab, var(--ink) 16%, transparent);
+  color: var(--ink);
+  -webkit-text-fill-color: var(--ink);
+  text-shadow: 0.06em -0.04em 0 color-mix(in oklab, #ff48b0 75%, transparent);
+}
+
+/* Numbering-machine wheels (figures.tsx): a reel of 30 digits slides past a window. */
+.reel {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.reel::before {
+  content: attr(data-reel);
+  position: absolute;
+  inset: 0 0 auto 0;
+  white-space: pre;
+  text-align: center;
+  -webkit-text-fill-color: currentColor;
+  transform: translateY(calc(var(--at, 0) / 30 * -100%));
+  transition: var(--reel-t, none);
+  pointer-events: none;
+}
+
+/* A fresh coupon printing in from its stub (tear-coupon.tsx). */
+@keyframes coupon-print {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* The pull cord's light switch: the new theme spreads as a circle (pull-cord.tsx). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 .grain {
   pointer-events: none;
   position: fixed;

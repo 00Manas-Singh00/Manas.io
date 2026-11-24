@@ -35,7 +35,7 @@ export function setSound(on: boolean) {
   listeners.forEach((fn) => fn(on));
 }
 
-export type Sound = "tick" | "click" | "flick" | "turn";
+export type Sound = "tick" | "click" | "flick" | "turn" | "tear";
 
 let lastFlick = 0;
 
@@ -64,6 +64,9 @@ export function play(name: Sound) {
     case "turn":
       // A sheet of paper turning: a filtered noise sweep.
       return noise(0.6, 0.06, t, 500, 4200);
+    case "tear":
+      // Paper tearing along a perforation: short, bright and rising.
+      return noise(0.24, 0.07, t, 1800, 7500);
   }
 }
 

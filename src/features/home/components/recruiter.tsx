@@ -20,6 +20,7 @@ import {
   readRecruiterFromUrl,
   setRecruiter,
 } from "../lib/recruiter";
+import { Figures } from "./figures";
 import { InkLink } from "./ink-link";
 import { RollText } from "./roll-text";
 
@@ -179,7 +180,7 @@ export function RecruiterView() {
                       className="flex flex-wrap items-end justify-between gap-x-6 gap-y-1 border-t border-ink py-3"
                     >
                       <span className="text-[clamp(2rem,4.2vw,3.75rem)] leading-none font-light tabular-nums">
-                        {h.value}
+                        <Figures text={h.value} />
                       </span>
                       <span className="max-w-[34ch] pb-1 text-right text-sm text-ink-soft">
                         {h.label}
