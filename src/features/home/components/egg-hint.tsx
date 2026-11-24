@@ -109,14 +109,21 @@ export function EggHint({ className }: { className?: string }) {
 }
 
 const SLIP_SEEN = "manas-io:slip";
-const SLIP_AFTER_MS = 8000; // time on the page before it appears
-const SLIP_FOR_MS = 11000; // how long it stays, unless hovered
+const SLIP_SETTLE_MS = 1500; // a beat at the end before it appears
+const SLIP_FOR_MS = 14000; // how long it stays, unless hovered
+
+/** The visitor has reached the end: the contact section fills most of the screen. */
+function atTheEnd() {
+  const contact = document.getElementById("contact");
+  if (!contact) return false;
+  return contact.getBoundingClientRect().top < window.innerHeight * 0.5;
+}
 
 /**
- * A paper slip that tucks into the bottom-left corner once per visit, after the
- * visitor has scrolled past the hero and spent a few seconds on the page. It carries
- * one hint, offers another, and leaves on its own (or with ×). If the egg it hints at
- * is found while it's up, it says so and goes.
+ * A paper slip that tucks into the bottom-right corner once per visit, when the visitor
+ * reaches the end of the page, so the site is seen as it is first and the secrets come
+ * as a parting note. It carries one hint, offers another, and leaves on its own (or
+ * with ×). If the egg it hints at is found while it's up, it says so and goes.
  */
 export function EggSlip() {
   const { pool, found } = usePool();
@@ -126,24 +133,29 @@ export function EggSlip() {
   const [hold, setHold] = useState(false);
   const [foundNow, setFoundNow] = useState(false);
 
-  // Wait for some reading, then show once per visit.
+  // Wait until they've read to the end (and stayed a beat), then show once per visit.
   useEffect(() => {
     let seen = false;
     try {
       seen = !!sessionStorage.getItem(SLIP_SEEN);
     } catch {}
     if (seen) return;
-    const start = performance.now();
+    let since = 0;
     const id = window.setInterval(() => {
-      if (performance.now() - start < SLIP_AFTER_MS) return;
-      if (window.scrollY < window.innerHeight * 0.8) return;
+      if (!atTheEnd()) {
+        since = 0;
+        return;
+      }
+      since ||= performance.now();
+      if (performance.now() - since < SLIP_SETTLE_MS) return;
       window.clearInterval(id);
       try {
         sessionStorage.setItem(SLIP_SEEN, "1");
       } catch {}
-      setTurn(visitNumber() - 1);
+      // One ahead of the footer line, so the two offer different secrets.
+      setTurn(visitNumber());
       setOpen(true);
-    }, 1000);
+    }, 500);
     return () => window.clearInterval(id);
   }, []);
 
@@ -175,7 +187,7 @@ export function EggSlip() {
       onAnimationEnd={(e) =>
         e.animationName === "egg-slip-out" && setOpen(false)
       }
-      className={`fixed bottom-16 left-4 z-[57] w-[min(320px,calc(100vw-2rem))] border border-ink bg-paper p-4 text-ink shadow-[0_18px_40px_-18px_rgba(0,0,0,0.45)] md:left-6 ${gone ? "egg-slip-out" : "egg-slip-in"}`}
+      className={`fixed right-4 bottom-16 z-[57] w-[min(320px,calc(100vw-2rem))] border border-ink bg-paper p-4 text-ink shadow-[0_18px_40px_-18px_rgba(0,0,0,0.45)] md:right-14 ${gone ? "egg-slip-out" : "egg-slip-in"}`}
     >
       <div className="flex items-center justify-between text-[10px] tracking-widest uppercase">
         <span className="rounded-full bg-ink px-2 py-0.5 text-paper">Psst</span>
