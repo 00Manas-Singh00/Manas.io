@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { PROJECTS } from "../data";
+import { markFound } from "../lib/eggs";
 import { scroller } from "../lib/lenis";
 import { play } from "../lib/sound";
 
@@ -35,6 +36,7 @@ export function ShipIt() {
       buffer = (buffer + e.key.toLowerCase()).slice(-SECRET.length);
       if (buffer === SECRET) {
         buffer = "";
+        markFound("ship");
         setOpen(true);
       }
     };

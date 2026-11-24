@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { markFound } from "../lib/eggs";
 import { orbScreen } from "../lib/orb";
 
 const RED = "#e5322d"; // proofreader's red pencil
@@ -72,6 +73,10 @@ export function ProofMode() {
       window.removeEventListener(OPEN_EVENT, toggle);
     };
   }, []);
+
+  useEffect(() => {
+    if (on) markFound("proof");
+  }, [on]);
 
   // While open, follow the page: re-measure the annotated elements every frame.
   useEffect(() => {

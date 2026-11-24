@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
+import { markFound } from "../lib/eggs";
 import { markThemeChosen } from "../lib/paper";
 import { play } from "../lib/sound";
 
@@ -112,8 +113,12 @@ export function Cord({
       // A tap: a short tug for the eye, then the switch.
       setPull(14);
       window.setTimeout(() => setPull(0), 110);
+      markFound("cord");
       onPull(knob.current);
-    } else if (drag.current.pull > TRIGGER) onPull(knob.current);
+    } else if (drag.current.pull > TRIGGER) {
+      markFound("cord");
+      onPull(knob.current);
+    }
   };
 
   return (

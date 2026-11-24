@@ -510,6 +510,18 @@ html.riso .hero-portrait-inner img {
   pointer-events: none;
 }
 
+/* The footer's easter-egg hint rising into place (egg-hint.tsx). */
+.egg-hint-in {
+  animation: egg-hint-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes egg-hint-in {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .egg-hint-in { animation: none; }
+}
+
 /* A fresh coupon printing in from its stub (tear-coupon.tsx). */
 @keyframes coupon-print {
   from { clip-path: inset(0 100% 0 0); }

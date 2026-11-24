@@ -14,6 +14,7 @@ import { PROFILE, SOCIALS } from "../data";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "../lib/gsap";
 import { decodeEmail, scrollToId } from "../lib/lenis";
 import { moveOrb } from "../lib/orb";
+import { EggHint } from "./egg-hint";
 import { Guestbook } from "./guestbook";
 import { PosterButton } from "./poster";
 import { RollText } from "./roll-text";
@@ -235,10 +236,9 @@ export function Contact() {
           <p className="mt-4 flex justify-between text-xs uppercase">
             <span>© {new Date().getFullYear()} Manas Singh</span>
             <PosterButton />
-            <span className="hidden md:inline">
-              Psst: type &ldquo;ship it&rdquo; anywhere
-            </span>
+            <EggHint className="hidden md:inline-block" />
           </p>
+          <EggHint className="mt-2 block text-xs md:hidden" />
         </div>
       </div>
     </footer>
