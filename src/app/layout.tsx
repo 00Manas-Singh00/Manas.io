@@ -80,6 +80,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     creator: "@singhmanas2705",
+    site: "@singhmanas2705",
   },
   icons: {
     icon: [

@@ -22,10 +22,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: study.lede,
     alternates: { canonical: `/projects/${id}` },
     openGraph: {
-      title: `${project.title}, a case study`,
+      // Shared links travel without the site around them, so the name goes in.
+      title: `${project.title}, a case study by Manas Singh`,
       description: study.lede,
       url: `/projects/${id}`,
       type: "article",
+    },
+    twitter: {
+      title: `${project.title}, a case study by Manas Singh`,
+      description: study.lede,
     },
   };
 }
