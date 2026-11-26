@@ -7,7 +7,7 @@ export const USER: User = {
   username: "Manas2705",
   gender: "male",
   pronouns: "he/him",
-  bio: "Full-stack, forward-deployed engineer. Hand me the messy problem: I'll sit with the people who have it, then ship the software that fixes it, end to end.",
+  bio: "Full-stack, forward-deployed engineer. Hand me the messy problem. I'll ship it.",
   flipSentences: [
     "Creating with code. Small details matter.",
     "Software Engineer",
